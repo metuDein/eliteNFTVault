@@ -1,5 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 import { useDataContext } from "@/components/context/DataProvider";
 import ProfileTabs from "@/components/tabcomponent/ProfileTabs";
 import Image from "next/image";
@@ -8,9 +7,8 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 
 const User = () => {
-  const searchParams = useSearchParams();
-  const { appData } = useDataContext();
-  const username = searchParams.get("username");
+  const { appData, user } = useDataContext();
+  const username = user?.username;
 
   const { assets, collections } = appData;
   const myAssets = assets.filter(
