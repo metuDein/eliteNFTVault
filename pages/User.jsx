@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
+import Loading from "@/components/loading/Loading";
 
 const User = () => {
   const { appData, user } = useDataContext();
@@ -20,6 +21,8 @@ const User = () => {
   );
 
   console.log(myCollections.length);
+
+  if (!appData || !user) return <Loading otherStyles={"mx-auto"} />;
 
   return (
     <div className="w-full min-h-screen  flex items-center">
