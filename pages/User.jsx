@@ -6,19 +6,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import Loading from "@/components/loading/Loading";
+import { useState, useEffect } from "react";
 
 const User = () => {
   const { appData, user } = useDataContext();
   const username = user?.username;
 
-  const { assets, collections } = appData;
-  const myAssets = assets.filter(
-    (item, i) => item?.owner?.username === username
-  );
+  const [myAssets, setMyAssets] = useState([]);
+  const [myCollections, setMyCollections] = useState([]);
 
-  const myCollections = collections.filter(
-    (item) => item?.owner?.username === username
-  );
+  useEffect(() => {
+    if (appData) {
+      const { assets, collections } = appData;
+      const myAssets = assets.filter(
+        (item, i) => item?.owner?.username === username
+      );
+
+      const myCollections = collections.filter(
+        (item) => item?.owner?.username === username
+      );
+      setMyAssets(myAssets);
+      setMyCollections(myCollections);
+    }
+  }, [appData]);
 
   console.log(myCollections.length);
 
