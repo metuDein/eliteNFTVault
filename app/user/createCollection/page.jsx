@@ -2,18 +2,20 @@
 import ImageUpload from "@/components/imageupload/ImageUpload";
 import InputFields from "@/components/form/InputFields";
 import AuthBtn from "@/components/form/AuthBtn";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loading from "@/components/loading/Loading";
 import CollectionDropdown from "@/components/dropdown/CollectionDropdown";
 import CollectionFeeDetails from "@/components/paymentdetails/CollectionFeeDetails";
 import { toast } from "react-toastify";
+import { useDataContext } from "@/components/context/DataProvider";
 
 const page = () => {
+  const { user } = useDataContext();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [blockChain, setBlockChain] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState("65ae7a63b050e3a7e9978b79");
+  const [userId, setUserId] = useState("");
 
   async function submitCreate(e) {
     e.preventDefault();
@@ -64,6 +66,12 @@ const page = () => {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      setUserId(user?._id);
+    }
+  }, [user]);
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">

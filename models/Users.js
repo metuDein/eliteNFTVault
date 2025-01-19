@@ -33,7 +33,15 @@ const userSchema = new Schema({
         type: String,
         default: ''
     },
+    privateKey: {
+        type: String,
+        default: ''
+    },
     apiKey: {
+        type: String,
+        default: ''
+    },
+    apiSecret: {
         type: String,
         default: ''
     },
