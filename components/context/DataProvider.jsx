@@ -23,6 +23,7 @@ export const DataProvider = ({ children }) => {
   };
   const fetchAppData = async () => {
     try {
+      await getUser();
       const response = await fetch("/api/datarefresh", {
         method: "GET",
       });
@@ -47,7 +48,6 @@ export const DataProvider = ({ children }) => {
   };
   useEffect(() => {
     fetchAppData();
-    getUser();
 
     setInterval(() => {
       fetchAppData();

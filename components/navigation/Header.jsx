@@ -12,9 +12,10 @@ import ConnectWallet from "../walletconnection/ConnectWallet";
 const Header = () => {
   const { user } = useDataContext();
   const [search, setSearch] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
 
   return (
-    <header className="w-full p-2 fixed shadow-2xl shadow-black flex items-center justify-center z-[1000] bg-[#281549]/80">
+    <header className="w-full p-2 fixed shadow-2xl shadow-black flex items-center justify-center z-10 bg-[#281549]/80">
       <nav className="flex items-center justify-between max-w-7xl w-full">
         <Link href={"/"} className="flex items-center justify-center">
           <Image
@@ -84,7 +85,7 @@ const Header = () => {
             </div>
             <div className="flex items-center justify-center">
               <NavDropDownMenu user={user} />
-              <ConnectWallet />
+              <ConnectWallet setWalletAddress={setWalletAddress} />
             </div>
           </div>
         )}
