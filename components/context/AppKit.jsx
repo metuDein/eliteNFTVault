@@ -29,7 +29,6 @@ const modal = createAppKit({
   defaultNetwork: mainnet,
   metadata: metadata,
   features: {
-    analytics: true,
     allWallets: "SHOW", // Optional - defaults to your Cloud configuration
   },
 });

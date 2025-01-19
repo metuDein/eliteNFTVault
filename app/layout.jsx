@@ -79,16 +79,16 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${dmMono.variable} antialiased`}>
-        <Provider>
-          <DataProvider>
-            <ContextProvider cookies={cookies}>
+        <ContextProvider cookies={cookies}>
+          <Provider>
+            <DataProvider>
               <Header />
               {children}
               <Footer />
               <ToastContainer />
-            </ContextProvider>
-          </DataProvider>
-        </Provider>
+            </DataProvider>
+          </Provider>
+        </ContextProvider>
       </body>
     </html>
   );
