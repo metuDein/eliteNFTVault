@@ -5,8 +5,7 @@ import { DataProvider } from "@/components/context/DataProvider";
 import { ToastContainer } from "react-toastify";
 import Footer from "@/components/navigation/Footer";
 import Header from "@/components/navigation/Header";
-import ContextProvider from "@/components/context/AppKit";
-import { headers } from "next/headers";
+import { AppKit } from "@/components/context/AppKit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -72,23 +71,20 @@ export const metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default async function RootLayout({ children }) {
-  const cookieHeaders = await headers();
-  const cookies = cookieHeaders.get("cookie");
-
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${dmSans.variable} ${dmMono.variable} antialiased`}>
-        <ContextProvider cookies={cookies}>
-          <Provider>
+        <Provider>
+          <AppKit>
             <DataProvider>
               <Header />
               {children}
               <Footer />
               <ToastContainer />
             </DataProvider>
-          </Provider>
-        </ContextProvider>
+          </AppKit>
+        </Provider>
       </body>
     </html>
   );

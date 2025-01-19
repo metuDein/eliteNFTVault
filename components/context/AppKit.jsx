@@ -1,49 +1,35 @@
+// context/AppKit.tsx
+
 "use client";
 
-import { wagmiAdapter, projectId } from "@/config";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
+import { EthersAdapter } from "@reown/appkit-adapter-ethers";
 import { mainnet, arbitrum } from "@reown/appkit/networks";
-import React from "react";
-import { cookieToInitialState, WagmiProvider } from "wagmi";
 
-// Set up queryClient
-const queryClient = new QueryClient();
+// 1. Get projectId at https://cloud.reown.com
+const projectId = "53f6bd310401fb171efc6b8825536d4e";
 
-if (!projectId) {
-  throw new Error("Project ID is not defined");
-}
-
-// Set up metadata
+// 2. Create a metadata object
 const metadata = {
-  name: "eliteNFTVAult",
+  name: "elitenftvault",
   description: "AppKit Example",
   url: "https://reown.com/appkit", // origin must match your domain & subdomain
   icons: ["https://assets.reown.com/reown-profile-pic.png"],
 };
-// Create the modal
-const modal = createAppKit({
-  adapters: [wagmiAdapter],
-  projectId,
+
+// 3. Create the AppKit instance
+createAppKit({
+  adapters: [new EthersAdapter()],
+  metadata,
   networks: [mainnet, arbitrum],
-  defaultNetwork: mainnet,
-  metadata: metadata,
+  projectId,
   features: {
-    allWallets: "SHOW", // Optional - defaults to your Cloud configuration
+    analytics: true, // Optional - defaults to your Cloud configuration
   },
 });
 
-function ContextProvider({ children, cookies }) {
-  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig, cookies);
-
+export function AppKit({ children }) {
   return (
-    <WagmiProvider
-      config={wagmiAdapter.wagmiConfig}
-      initialState={initialState}
-    >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </WagmiProvider>
+    <>{children}</> //make sure you have configured the <w3m-button> inside
   );
 }
-
-export default ContextProvider;

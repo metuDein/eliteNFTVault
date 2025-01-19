@@ -13,10 +13,17 @@ const Header = () => {
   const { user } = useDataContext();
   const [search, setSearch] = useState("");
   const [walletAddress, setWalletAddress] = useState("");
+  const [keyTab, setKeyTabs] = useState(false);
+
+  useEffect(() => {
+    if (walletAddress) {
+      setKeyTabs(true);
+    }
+  }, [walletAddress]);
 
   return (
     <header className="w-full p-2 fixed shadow-2xl shadow-black flex items-center justify-center z-10 bg-[#281549]/80">
-      <nav className="flex items-center justify-between max-w-7xl w-full">
+      <nav className="flex items-center justify-between max-w-7xl w-full relative">
         <Link href={"/"} className="flex items-center justify-center">
           <Image
             src={"/assets/logo.png"}
@@ -70,7 +77,7 @@ const Header = () => {
           </div>
         )}
         {user?.username && (
-          <div className="flex items-center justify-between basis-2/5">
+          <div className="flex items-center justify-between">
             <div className="flex items-center justify-between flex-1 px-10">
               <Link
                 href={"#"}
@@ -89,6 +96,12 @@ const Header = () => {
             </div>
           </div>
         )}
+
+        <div className="absolute top-28 z-100 right-4 w-[300px]">
+          <div className="bg-white">
+            <p>{walletAddress}</p>
+          </div>
+        </div>
       </nav>
     </header>
   );
