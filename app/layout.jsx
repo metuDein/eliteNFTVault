@@ -73,7 +73,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const cookies = await headers().get("cookie");
+  const cookieHeaders = await headers();
+  const cookies = cookieHeaders.get("cookie");
 
   return (
     <html lang="en">

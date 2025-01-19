@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useDataContext } from "@/components/context/DataProvider";
 
 import Loading from "@/components/loading/Loading";
@@ -13,7 +13,8 @@ import ShoppingCard from "@/components/NFtcards/ShoppingCard";
 import TxAlert from "@/components/loading/TxAlert";
 import PurchaseAlert from "@/components/loading/PurchaseAlert";
 
-const page = ({ params }) => {
+const page = props => {
+  const params = use(props.params);
   const { appData, user } = useDataContext();
   const { assets, collections } = appData;
 

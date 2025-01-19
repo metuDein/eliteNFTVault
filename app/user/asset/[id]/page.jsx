@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useDataContext } from "@/components/context/DataProvider";
 import InputFields from "@/components/form/InputFields";
 import AuthBtn from "@/components/form/AuthBtn";
@@ -10,7 +10,8 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 
-const Page = ({ params }) => {
+const Page = props => {
+  const params = use(props.params);
   const { appData } = useDataContext();
   const { assets } = appData;
 

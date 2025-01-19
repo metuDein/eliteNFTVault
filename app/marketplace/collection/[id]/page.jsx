@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import ShoppingCard from "@/components/NFtcards/ShoppingCard";
 import Loading from "@/components/loading/Loading";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 
-const page = ({ params }) => {
+const page = props => {
+  const params = use(props.params);
   const { appData, user } = useDataContext();
   const { assets, collections } = appData;
 
