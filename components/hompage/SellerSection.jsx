@@ -19,7 +19,7 @@ const SellerSection = () => {
   if (!topSellers) return <Loading otherStyles={"mx-auto"} />;
 
   return (
-    <div className="w-full grid grid-cols-3 gap-16 justify-items-center">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-16 justify-items-center">
       {topSellers.map((item, i) => (
         <SellerCard data={item} key={i} index={i} />
       ))}

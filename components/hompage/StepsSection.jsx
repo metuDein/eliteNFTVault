@@ -8,7 +8,7 @@ import {
 import StepsCard from "../NFtcards/StepsCard";
 const StepsSection = () => {
   return (
-    <div className="grid grid-cols-2 gap-10">
+    <div className="grid grid-cols-2 gap-3 sm:gap-10">
       <StepsCard
         icon={faUserPlus}
         title={"Create your Account"}

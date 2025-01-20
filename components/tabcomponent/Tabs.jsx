@@ -28,16 +28,16 @@ const Tabs = ({}) => {
   }, [appData]);
 
   return (
-    <div className="w-[1200px] min-h-screen p-3">
+    <div className="w-full sm:w-[1200px] min-h-screen p-3 pt-[75px] pb-6">
       <div className="flex flex-col items-start w-full">
         <div className="flex items-start justify-between w-full">
-          <h2 className="text-2xl font-bold text-[#ffffff] basis-2/5 text-center">
+          <h2 className="text-2xl font-bold text-[#ffffff] basis-2/5 text-center hidden sm:flex">
             {activeTab === 0 && "Assets"}
             {activeTab === 1 && "Collections"}
             {activeTab === 2 && "Highest"}
             {activeTab === 3 && "Lowest"}
           </h2>
-          <div className="flex items-center justify-end flex-1 space-x-6">
+          <div className="flex items-center justify-end flex-1 space-x-1 sm:space-x-3">
             <button
               className={`${
                 activeTab === 0 ? "bg-[#ef8bf7]" : "bg-transparent"
@@ -59,7 +59,7 @@ const Tabs = ({}) => {
             <button
               className={`${
                 activeTab === 2 ? "bg-[#ef8bf7]" : "bg-transparent"
-              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-3 py-2 text-white`}
+              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-3 py-2 text-white hidden sm:flex`}
               onClick={() => handleTabClicked(2)}
             >
               {" "}
@@ -68,7 +68,7 @@ const Tabs = ({}) => {
             <button
               className={`${
                 activeTab === 3 ? "bg-[#ef8bf7]" : "bg-transparent"
-              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-3 py-2 text-white`}
+              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-3 py-2 text-white hidden sm:flex`}
               onClick={() => handleTabClicked(3)}
             >
               {" "}
@@ -77,7 +77,7 @@ const Tabs = ({}) => {
           </div>
         </div>
         {/* Tabs display */}
-        <div className="w-full p-6 min-h-screen border border-black mt-5 grid grid-cols-3 gap-5 justify-items-center">
+        <div className="w-full p-1 min-h-screen mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center">
           {activeTab === 0 &&
             [...assets]
               .reverse()

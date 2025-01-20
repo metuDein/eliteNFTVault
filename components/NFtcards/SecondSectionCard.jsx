@@ -7,10 +7,10 @@ const SecondSectionCard = ({ data, index }) => {
     <div
       className={`absolute w-[240px] h-[380px] rounded-[10px]  flex flex-col p-3 items-start justify-start bg-[#ef8bf7]/90    ${
         index === 0
-          ? "transform -rotate-[20deg] -left-24 opacity-75"
+          ? "transform -rotate-[20deg] -left-24 opacity-75 -z-10 sm:flex hidden"
           : index === 1
-          ? "mb-3 -top-10 z-30"
-          : "transform rotate-[20deg] left-24 opacity-75"
+          ? "mb-3 -top-10 z-0"
+          : " sm:transform rotate-[20deg] left-24 opacity-75 -z-10 sm:flex hidden"
       }`}
     >
       <Image

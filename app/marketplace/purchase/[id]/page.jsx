@@ -12,13 +12,15 @@ import { faArrowDown, faEye, faHeart } from "@fortawesome/free-solid-svg-icons";
 import ShoppingCard from "@/components/NFtcards/ShoppingCard";
 import TxAlert from "@/components/loading/TxAlert";
 import PurchaseAlert from "@/components/loading/PurchaseAlert";
+import { useRouter } from "next/navigation";
 
-const page = props => {
+const page = (props) => {
+  const router = useRouter();
   const params = use(props.params);
   const { appData, user } = useDataContext();
-  const { assets, collections } = appData;
+  const { assets } = appData;
 
-  const [assetColl, setAssetColl] = useState(null);
+  const [collAssets, setCollAssets] = useState([]);
 
   const [resolvedParams, setResolvedParams] = useState(null);
   const [asset, setAsset] = useState(null);
@@ -40,17 +42,19 @@ const page = props => {
       const currentAsset = assets.find(
         (item) => item._id === resolvedParams.id
       );
-      const currentCollection = collections.find(
-        (item) => item.name === asset?.collectionName?.name
+      const sameCol = assets.filter(
+        (item) => item.collectionName?._id === currentAsset?.collectionName?._id
       );
+      console.log(sameCol);
       setAsset(currentAsset);
-      setAssetColl(currentCollection);
+      setCollAssets(sameCol);
     }
   }, [resolvedParams, assets]);
 
   async function initiatePurchase() {
     try {
       setLoading(true);
+      if (!user?._id) return router.push("/login");
       if (user?.balance < asset.price) {
         setLoading(false);
         setPurchase("failed");
@@ -85,11 +89,11 @@ const page = props => {
   if (!resolvedParams || !asset) return <Loading otherStyles={"mx-auto"} />;
 
   return (
-    <div className="w-full min-h-screen p-2 flex flex-col">
-      <h2 className="my-3 text-[#ffffff] font-bold text-[35px] text-center">
+    <div className="w-full min-h-screen p-2 flex flex-col pt-[75px] pb-5">
+      <h2 className="my-3 text-[#ffffff] font-bold text-[25px] sm:text-[35px] text-center">
         Purchase
       </h2>
-      <div className="flex items-start justify-between w-full  max-w-5xl mx-auto relative">
+      <div className="flex flex-col-reverse sm:flex-row items-start justify-center sm:justify-between w-full  max-w-5xl mx-auto relative">
         {loading && (
           <Loading
             otherStyles={"absolute mx-auto z-30  bg-[#582b71]/50 top-2"}
@@ -151,39 +155,44 @@ const page = props => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col  basis-[48%]">
+        <div className="flex flex-col mx-auto  sm:basis-[48%]">
           <Image
             src={asset.image}
             alt="product image"
             width={1500}
             height={1500}
-            className="w-[400px] h-[500px] rounded-[10px]"
+            className="w-[299px] sm:w-[400px] h-[500px] rounded-[10px]"
           />
           <ConfirmBtn
             title={"Buy Now"}
             otherStyles={
-              "text-white text-xl font-semibold bg-[#ef8bf7] w-[400px] p-4 mt-2"
+              "text-white text-xl font-semibold bg-[#ef8bf7] w-[299px] sm:w-[400px] p-4 mt-2"
             }
             handleClicked={initiatePurchase}
           />
         </div>
       </div>
-      <div className="flex flex-col p-2 my-4">
-        <h3 className="text-white font-semibold text-3xl mb-2">
-          {" "}
-          More from this Collection
-        </h3>
-        <div className="grid grid-cols-3 gap-3 justify-items-center">
-          {/* <ShoppingCard />
-          <ShoppingCard />
-          <ShoppingCard /> */}
+      {collAssets && (
+        <div className="flex flex-col p-2 my-4">
+          <h3 className="text-white font-semibold text-3xl mb-2">
+            {" "}
+            More from this Collection
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 justify-items-center">
+            {asset &&
+              [...collAssets]
+                .reverse()
+                .map((item) => <ShoppingCard key={item?._id} data={item} />)}
+          </div>
         </div>
-      </div>
+      )}
       <div className="flex flex-col p-2 my-4">
         <h3 className="text-white font-bold text-3xl mb-2"> Other assets</h3>
-        <div className="grid grid-cols-3 gap-3 justify-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 justify-items-center">
           {assets &&
-            assets.map((item) => <ShoppingCard key={item?._id} data={item} />)}
+            [...assets]
+              .reverse()
+              .map((item) => <ShoppingCard key={item?._id} data={item} />)}
         </div>
       </div>
     </div>

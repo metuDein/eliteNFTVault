@@ -14,10 +14,10 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
   }
 
   return (
-    <div className={`w-full p-3 z-30 ${otherStyles}`}>
+    <div className={`w-full sm:p-3  ${otherStyles}`}>
       <div className="flex flex-col items-center w-full">
         <div className="flex items-start justify-between w-full">
-          <div className="flex items-center justify-center flex-1 space-x-6">
+          <div className="flex items-center justify-center flex-1 space-x-1">
             <button
               className={`${
                 activeTab === 0 ? "bg-[#ef8bf7]" : "bg-transparent"
@@ -39,7 +39,7 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
             <button
               className={`${
                 activeTab === 2 ? "bg-[#ef8bf7]" : "bg-transparent"
-              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-3 py-2 text-white`}
+              }  border-solid border-[2px] border-[#ef7bf7] rounded-[38px] px-2 sm:px-3 py-2 text-white text-nowrap hidden sm:flex`}
               onClick={() => handleTabClicked(2)}
             >
               {" "}
@@ -57,7 +57,7 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
           </div>
         </div>
         {/* ProfileTabs display */}
-        <div className="w-full p-6 min-h-[500px] border border-black mt-5 grid grid-cols-3 gap-2 items-center justify-center">
+        <div className="w-full p-1 min-h-[500px]  mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2 justify-items-center">
           {activeTab === 0 &&
             assets &&
             assets.map((item, i) => <ShoppingCard key={i} data={item} />)}

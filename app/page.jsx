@@ -12,9 +12,9 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full p-2 font-[family-name:var(--font-dm-sans)]">
       <main className="flex flex-col items-center justify-center">
-        <div className="max-w-4xl w-full flex items-start justify-between my-10">
-          <div className="mr-5 self-center">
-            <h2 className="text-[35px] font-semibold mb-3">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col-reverse sm:flex-row items-start justify-between my-10">
+          <div className="sm:mr-5 self-center mt-10">
+            <h2 className="text-[30px] sm:text-[35px] font-semibold mb-3 text-center sm:text-left">
               {" "}
               CREATE NFTS{" "}
               <Image
@@ -27,7 +27,7 @@ export default function Home() {
               <br />
               ARTWORKS AND SELL
             </h2>
-            <p className="w-[299px]">
+            <p className="[299px] text-[14px] text-center sm:text-left">
               Your ultimate destination for securing, showcasing, and exploring
               the world of premium NFTs. Unlock the future of digital ownership
               today!
@@ -36,26 +36,26 @@ export default function Home() {
             <ConfirmBtn
               title={"Get Started"}
               otherStyles={
-                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[250px] mt-5 text-[16px] font-semibold"
+                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-full sm:w-[140px] mt-5 text-[16px] font-semibold mx-auto sm:mx-0 self-center"
               }
             />
           </div>
-          <div className="self-center">
+          <div className="self-center mx-auto mt-4 sm:mt-0">
             <Carousel />
           </div>
           {/* site stats */}
           <div></div>
-        </div>
+        </section>
         {/* second section */}
-        <div className="max-w-4xl w-full flex items-start justify-between my-10">
-          <div>
+        <section className="max-w-4xl min-h-screen w-full flex flex-col sm:flex-row items-start justify-between my-10">
+          <div className="p-1 sm:flex hidden flex-1 min-h-[350px] mx-auto w-full">
             <SectionSecond />
           </div>
           <div className="mr-5">
-            <h3 className="text-[35px] font-semibold mb-3">
+            <h3 className="text-[35px] font-semibold mb-3 sm:text-left text-center">
               High Quality Assets
             </h3>
-            <p className="w-[299px]">
+            <p className="w-[299px] text-center sm:text-left">
               Discover boundless creativity on EliteNFTVault an exclusive NFT
               platform where visionary artists tokenize their exceptional works.
               <br />
@@ -69,13 +69,13 @@ export default function Home() {
             <ConfirmBtn
               title={"Explore"}
               otherStyles={
-                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[250px] mt-5 text-[16px] font-semibold"
+                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-full sm:w-[250px] mt-5 text-[16px] font-semibold self-center"
               }
             />
           </div>
-        </div>
+        </section>
         {/* third section */}
-        <div className="max-w-4xl w-full flex flex-col items-start justify-between my-10">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col items-start justify-between my-10">
           <div className="mx-auto">
             <h3 className="text-[35px] font-semibold mb-3 text-center">
               Our lastest NFT Assets
@@ -88,10 +88,11 @@ export default function Home() {
           </div>
           <div className="mx-auto mt-10">
             <HomeTab />
+            {/* <SectionSecond /> */}
           </div>
-        </div>
+        </section>
         {/* fourth section */}
-        <div className="max-w-4xl w-full flex flex-col items-start justify-between my-10">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col items-start justify-between my-10">
           <div className="mx-auto">
             <h3 className="text-[35px] font-semibold mb-3 text-center">
               Top Traders
@@ -100,9 +101,9 @@ export default function Home() {
           <div className="mx-auto mt-10">
             <SellerSection />
           </div>
-        </div>
+        </section>
         {/* Fifth section */}
-        <div className="max-w-4xl w-full flex items-start justify-between my-10">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col sm:flex-row items-start justify-between my-10">
           <div className="mr-5">
             <h3 className="text-[35px] font-semibold mb-3">
               Create and Sell Now
@@ -120,10 +121,10 @@ export default function Home() {
               }
             />
           </div>
-          <div>
+          <div className=" mt-3 sm:mt-0">
             <StepsSection />
           </div>
-        </div>
+        </section>
       </main>
     </div>
   );

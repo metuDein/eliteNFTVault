@@ -97,9 +97,9 @@ const page = () => {
   }, [formData.email]);
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="sm:w-[1184px] h-[532px] rounded-[10px] border border-black/30 flex justify-around items-center">
-        <div className="w-[466px] flex items-end ">
+    <div className="w-full min-h-screen flex justify-center items-center pt-[75px] pb-6">
+      <div className="w-full sm:w-[1184px]  rounded-[10px] flex justify-around items-center">
+        <div className="w-[466px] hidden items-end sm:flex">
           <Image
             src={"/assets/authimage.png"}
             alt="auth sample"
@@ -110,7 +110,7 @@ const page = () => {
         </div>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col items-center justify-start relative flex-1"
+          className="flex flex-col items-center justify-start relative min-h-1"
         >
           {loading && (
             <Loading otherStyles={"absolute z-30 bg-[#582b71]/30 top-0"} />
@@ -132,7 +132,7 @@ const page = () => {
             </div>
           )}
 
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-2">
             <div className="relative">
               <InputFields
                 label={"Username"}
@@ -197,7 +197,7 @@ const page = () => {
               )}
             </div>
           </div>
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-2">
             <div className="relative">
               <InputFields
                 label={"Password"}
@@ -248,10 +248,13 @@ const page = () => {
               )}
             </div>
           </div>
-          <p className="my-2">
+          <p className="my-2 sm:text-[16px] text-sm w-[300px] mx-auto text-center">
             {" "}
             By continuing, you have agreed to the{" "}
-            <Link href={"/"} className="font-bold text-[#ff4ff3] underline">
+            <Link
+              href={`/frequently-asked-question?tab=5`}
+              className="font-bold text-[#ff4ff3] underline"
+            >
               {" "}
               terms and conditions
             </Link>{" "}
@@ -259,7 +262,7 @@ const page = () => {
           </p>
           <AuthBtn
             title={"Sign Up"}
-            otherStyles={"p-4 bg-[#ff4ff3]"}
+            otherStyles={"p-4 bg-[#ff4ff3] w-[270px] sm:w-full"}
             handleClicked={submit}
           />
         </form>

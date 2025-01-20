@@ -25,13 +25,13 @@ const ShoppingCard = ({ data }) => {
   }
 
   return (
-    <div className="w-[336px]  rounded-[10px]  flex flex-col p-3 items-start justify-start bg-[#ef8bf7]/50">
+    <div className="w-[300px]  rounded-[10px]  flex flex-col p-3 items-start justify-start bg-[#ef8bf7]/50">
       <Image
         src={data?.image || "/assets/nftsample.jpg"}
         alt="nft sample"
         width={"1000"}
         height={"1000"}
-        className="w-[302px] h-[387px] rounded-[9] mx-auto mb-2"
+        className="w-[280px] h-[330px] rounded-[9] mx-auto mb-2"
       />
       <h3 className="mb-2 font-bold">{`${(data?.name).substring(0, 27)}${
         (data?.name).length > 28 ? "..." : ""

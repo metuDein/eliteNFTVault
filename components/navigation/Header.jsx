@@ -17,8 +17,11 @@ import NavDropDownMenu from "../dropdown/NavDropDownMenu";
 import ConnectWallet from "../walletconnection/ConnectWallet";
 import { toast } from "react-toastify";
 import Loading from "../loading/Loading";
+import { usePathname, useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const { user, getUser } = useDataContext();
   const [search, setSearch] = useState("");
   const [keyTab, setKeyTabs] = useState(false);
@@ -34,6 +37,8 @@ const Header = () => {
   const [provider, setProvider] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  const [mobileSearchBar, setMobileSearchBar] = useState(false);
 
   function nextStep() {
     if (steps === 2 && !provider)
@@ -155,13 +160,24 @@ const Header = () => {
             alt="app logo"
             width={500}
             height={500}
-            className="w-[35px] h-[35px] mr-2"
+            className="w-[35px] h-[35px] mr-2 flex-1"
           />
-          <h1 className="text-white font-semibold">EliteNFTVault</h1>
+          <h1 className="text-white font-semibold hidden sm:flex">
+            EliteNFTVault
+          </h1>
         </Link>
 
-        <form className="flex items-center justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[400px]">
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="text-black" />
+        <button
+          onClick={() => setMobileSearchBar((prev) => !prev)}
+          className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-1  sm:hidden"
+        >
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="text-white" />
+        </button>
+        <form className="hidden sm:flex items-center justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px]">
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            className="text-black text-[17px]"
+          />
           <input
             type="text"
             placeholder="find a collection or asset"
@@ -170,48 +186,66 @@ const Header = () => {
             className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0"
           />
         </form>
+        {mobileSearchBar && (
+          <form className="flex sm:hidden absolute top-full items-center  justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px]">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="text-black text-[17px]"
+            />
+            <input
+              type="text"
+              placeholder="find a collection or asset"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0"
+            />
+          </form>
+        )}
         {/* when user is not loggedin */}
         {!user?.username && (
-          <div className="flex items-center justify-between basis-2/5">
-            <div className="flex items-center justify-between basis-2/4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between ">
               <Link
-                href={"#"}
-                className="hover:underline hover:scale-[1.1] transform duration-300"
+                href={"/marketplace/explore"}
+                className="hover:underline hover:scale-[1.1] transform duration-300 mx-1 sm:mx-4 hidden sm:flex"
               >
                 Explore
               </Link>
               <Link
-                href={"#"}
-                className="hover:underline hover:scale-[1.1] transform duration-300"
+                href={"/frequently-asked-questions"}
+                className="hover:underline hover:scale-[1.1] transform duration-300 mx-1 sm:mx-4"
               >
                 Help
               </Link>
               <Link
-                href={"#"}
-                className="hover:underline hover:scale-[1.1] transform duration-300"
+                href={"/login"}
+                className="hover:underline hover:scale-[1.1] transform duration-300 mx-2 sm:mx-4"
               >
                 Login
               </Link>
             </div>
-            <ConfirmBtn
-              title={"Get Started"}
-              otherStyles={
-                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[200px] text-[16px] font-semibold self-center"
-              }
-            />
+            {pathname !== "/register" && (
+              <ConfirmBtn
+                title={"Get Started"}
+                otherStyles={
+                  "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[100px] sm:w-[200px] text-[16px] font-semibold self-center"
+                }
+                handleClicked={() => router.push("/register")}
+              />
+            )}
           </div>
         )}
         {user?.username && (
           <div className="flex items-center justify-between ">
-            <div className="flex items-center justify-between flex-1 px-10">
+            <div className="flex items-center justify-between flex-1 px-2 sm:px-10">
               <Link
                 href={"#"}
-                className="hover:underline hover:scale-[1.1] transform duration-300 ml-10"
+                className="hover:underline hover:scale-[1.1] transform duration-300 ml-10 hidden sm:flex"
               >
                 Explore
               </Link>
 
-              <div className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-4">
+              <div className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-1 sm:mx-4">
                 <FontAwesomeIcon icon={faBell} />
               </div>
             </div>

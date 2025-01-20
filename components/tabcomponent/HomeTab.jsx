@@ -7,6 +7,7 @@ import MessageCard from "../message/MessageCard";
 import { useDataContext } from "../context/DataProvider";
 import Loading from "../loading/Loading";
 import HomeTabCards from "../NFtcards/HomeTabCards";
+import SecondCarousel from "../sample/SecondCarousel";
 
 const HomeTab = ({ otherStyles }) => {
   const { appData } = useDataContext();
@@ -14,6 +15,10 @@ const HomeTab = ({ otherStyles }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const [fiveItems, setFiveItems] = useState([]);
+
+  function handleTabClicked(index) {
+    setActiveTab(index);
+  }
 
   useEffect(() => {
     if (assets) {
@@ -25,10 +30,10 @@ const HomeTab = ({ otherStyles }) => {
   if (!assets) return <Loading otherStyles={"mx-auto"} />;
 
   return (
-    <div className={`w-full p-3 z-30 ${otherStyles}`}>
+    <div className={`w-full sm:p-3 ${otherStyles}`}>
       <div className="flex flex-col items-center w-full">
         <div className="flex items-start justify-between w-full">
-          <div className="flex items-center justify-center flex-1 space-x-6">
+          <div className="flex items-center justify-center flex-1 space-x-1">
             <button
               className={`${
                 activeTab === 0 ? "bg-[#ef8bf7]" : "bg-transparent"
@@ -50,7 +55,7 @@ const HomeTab = ({ otherStyles }) => {
             <button
               className={`${
                 activeTab === 2 ? "bg-[#ef8bf7]" : "bg-transparent"
-              }  border-solid border-[2px] border-[#ef7bf7] rounded-[10px] px-3 py-2 text-white`}
+              }  border-solid border-[2px] border-[#ef7bf7] rounded-[10px] px-3 py-2 text-white text-nowrap sm:flex hidden`}
               onClick={() => handleTabClicked(2)}
             >
               {" "}
@@ -68,11 +73,8 @@ const HomeTab = ({ otherStyles }) => {
           </div>
         </div>
         {/* ProfileTabs display */}
-        <div className="w-full p-6 min-h-[500px] border border-black mt-5 flex gap-3 items-center  justify-center">
-          {activeTab === 0 &&
-            fiveItems.map((item, i) => (
-              <HomeTabCards key={item._id} data={item} index={i} />
-            ))}
+        <div className="w-full p-6 min-h-[500px] mt-5 flex gap-3 items-center  justify-center">
+          {activeTab === 0 && <SecondCarousel data={assets} />}
         </div>
       </div>
     </div>

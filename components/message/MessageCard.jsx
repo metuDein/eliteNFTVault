@@ -1,6 +1,6 @@
 const MessageCard = () => {
   return (
-    <div className="w-[400px] p-2  flex flex-col">
+    <div className="w-[300px] p-2  flex flex-col place-self-start">
       <h3 className="text-xl font-semibold text-[#ff4ff3] text-left">
         {" "}
         You made a sale!!!{" "}

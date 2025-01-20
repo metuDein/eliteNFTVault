@@ -57,7 +57,8 @@ const userSchema = new Schema({
     resetPasswordTokenExpiration: {
         type: String,
         default: ''
-    }
+    },
+    bio: String
 }, {
     timestamps: true
 })

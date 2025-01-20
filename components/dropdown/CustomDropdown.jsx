@@ -19,7 +19,7 @@ const CustomDropdown = ({ category, setCategory, otherStyles }) => {
       <DropdownMenuTrigger>
         <button
           variant="outline"
-          className="w-[350px] bg-[#ff4ff3] p-4 rounded-xl flex items-center justify-between"
+          className="w-[299px] sm:w-[350px] bg-[#ff4ff3] p-4 rounded-xl flex items-center justify-between"
         >
           {!category && <span>Select a Category</span>}
           {category && <span>{category}</span>}

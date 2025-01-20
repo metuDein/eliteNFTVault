@@ -74,9 +74,9 @@ const page = () => {
   }
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="sm:w-[1184px] h-[532px] rounded-[10px] border border-black/30 flex justify-around items-center">
-        <div className="w-[466px] flex items-end ">
+    <div className="w-full min-h-screen flex justify-center items-center pt-[75px] pb-6">
+      <div className="sm:w-[1184px] h-[532px] rounded-[10px] flex justify-around items-center">
+        <div className="w-[466px] hidden items-end sm:flex">
           <Image
             src={"/assets/authimage.png"}
             alt="auth sample"
@@ -87,7 +87,7 @@ const page = () => {
         </div>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col items-center justify-start relative flex-1"
+          className="flex flex-col items-center justify-start relative"
         >
           {loading && (
             <Loading otherStyles={"absolute z-30 bg-[#582b71]/30 top-0"} />
@@ -115,7 +115,7 @@ const page = () => {
                 label={"Username"}
                 placeholder={"enter your username"}
                 value={formData.username}
-                otherStyles={"w-[450px]"}
+                otherStyles={"w-[299px] sm:w-[450px]"}
                 handleChange={(e) =>
                   setFormData({ ...formData, username: e.target.value })
                 }
@@ -128,7 +128,7 @@ const page = () => {
                 label={"Password"}
                 placeholder={"enter your password"}
                 value={formData.password}
-                otherStyles={"w-[450px]"}
+                otherStyles={"w-[299px] sm:w-[450px]"}
                 handleChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
@@ -136,7 +136,7 @@ const page = () => {
               />
             </div>
           </div>
-          <div className="mb-2 font-semibold text-[16px] text-left w-[400px] -mt-3">
+          <div className="mb-2 font-semibold text-[16px] text-left w-[300px] sm:w-[400px] -mt-3">
             <Link
               href={"/forgot-password"}
               className="text-[#ff4ff3] underline"
@@ -146,7 +146,7 @@ const page = () => {
           </div>
           <AuthBtn
             title={"Sign In"}
-            otherStyles={"p-4 bg-[#ff4ff3]"}
+            otherStyles={"p-4 bg-[#ff4ff3]  w-[270px] sm:w-full"}
             handleClicked={submit}
             loading={loading}
           />

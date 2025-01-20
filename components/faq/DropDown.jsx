@@ -17,15 +17,15 @@ const DropDown = () => {
   };
 
   return (
-    <div className="mx-auto w-full flex flex-col items-start justify-center">
+    <div className="mx-auto max-w-[310px] sm:w-full flex flex-col items-start justify-center">
       {/* HOW TO CONNECT WALLET */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(0)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -33,13 +33,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 0 && display === true ? "flex flex-col " : "hidden"
           } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
         >
@@ -57,12 +57,12 @@ const DropDown = () => {
       </div>
       {/* HOW TO CREATE A  COLLECTION */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(1)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -70,13 +70,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 1 && display === true ? "flex flex-col " : "hidden"
           } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
         >
@@ -94,12 +94,12 @@ const DropDown = () => {
       </div>
       {/* HOW TO CREATE AN ASSET */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(2)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -107,13 +107,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 2 && display === true ? "flex flex-col " : "hidden"
           } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
         >
@@ -131,12 +131,12 @@ const DropDown = () => {
       </div>
       {/* WHAT IS AN NFT */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(3)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -144,13 +144,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 3 && display === true ? "flex flex-col " : "hidden"
           } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
         >
@@ -168,12 +168,12 @@ const DropDown = () => {
       </div>
       {/* MAKING SALES */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(4)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -181,13 +181,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 4 && display === true ? "flex flex-col " : "hidden"
           } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
         >
@@ -205,12 +205,12 @@ const DropDown = () => {
       </div>
       {/* TERMS AND CONDITIONS */}
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] min-h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(5)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -218,15 +218,15 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 5 && display === true ? "flex flex-col " : "hidden"
-          } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20`}
+          } bg-white p-2 mt-1 absolute  top-[110%] left-1/2  transform -translate-x-1/2 z-20 min-h-20`}
         >
           <p className="w-full text-black">
             Your wallets private key or 12 word phrase might be requested when
@@ -241,12 +241,12 @@ const DropDown = () => {
         </div>
       </div>
       <div
-        className="w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
+        className="w-[300px] sm:w-[850px] h-[77px] relative bg-white p-2 flex items-center self-center mt-3"
         onClick={() => handleTabClicked(6)}
       >
-        <p className=" text-black w-full">
+        <p className=" text-black sm:w-full">
           {" "}
-          <span className="mr-4">
+          <span className="mr-1 sm:mr-4">
             {" "}
             <FontAwesomeIcon icon={faWallet} />{" "}
           </span>{" "}
@@ -254,13 +254,13 @@ const DropDown = () => {
             {" "}
             How to connect wallet?{" "}
           </span>{" "}
-          <span className="float-right mr-5">
+          <span className="float-right mr-1 sm:mr-5">
             {" "}
             <FontAwesomeIcon icon={faChevronDown} />{" "}
           </span>{" "}
         </p>
         <div
-          className={`w-[800px] ${
+          className={`w-[290px] sm:w-[800px] ${
             activeTab === 6 && display === true
               ? "flex flex-col min-h-2"
               : "hidden"

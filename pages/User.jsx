@@ -7,13 +7,19 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import Loading from "@/components/loading/Loading";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const User = () => {
+  const router = useRouter();
   const { appData, user } = useDataContext();
   const username = user?.username;
 
   const [myAssets, setMyAssets] = useState([]);
   const [myCollections, setMyCollections] = useState([]);
+
+  function handleNavigate() {
+    router.push("/user/editprofile");
+  }
 
   useEffect(() => {
     if (appData) {
@@ -30,52 +36,55 @@ const User = () => {
     }
   }, [appData]);
 
-  console.log(myCollections.length);
-
   if (!appData || !user) return <Loading otherStyles={"mx-auto"} />;
 
   return (
-    <div className="w-full min-h-screen  flex items-center">
-      <div className="w-full min-h-screen relative flex items-center">
-        <div className="absolute top-0 left-0 w-full h-96">
+    <div className="w-full min-h-screen">
+      <div className="w-full h-96">
+        <Image
+          src={"/assets/banner.jpg"}
+          alt="banner"
+          width={3500}
+          height={3500}
+          className="w-full h-96 opacity-20"
+        />
+      </div>
+      <div className="w-full min-h-40  mx-auto bg-[#281549] flex flex-col sm:flex-row -mt-20 flex-1">
+        <div className="-mt-16 w-[320px]  min-h-40 p-2 flex flex-col  items-center">
           <Image
-            src={"/assets/banner.jpg"}
-            alt="banner"
-            width={3500}
-            height={3500}
-            className="w-full h-96"
+            src={user?.image || "/assets/profilepic.jpg"}
+            alt="profile pic"
+            width={"1000"}
+            height={"1000"}
+            className="w-[188px] h-[188px] rounded-full my-2"
           />
-        </div>
-        <div className="w-full h-40 mx-auto bg-[#281549] z-30 flex  -mt-20">
-          <div className="-mt-16 w-[320px]  min-h-40 p-2 flex flex-col justify-between items-center">
-            <Image
-              src={"/assets/profilepic.jpg"}
-              alt="profile pic"
-              width={"1000"}
-              height={"1000"}
-              className="w-[188px] h-[188px] rounded-full my-2"
-            />
-            <h3>{username}</h3>
+          <h3>{username}</h3>
+          {user?.walletAddress && (
             <p>
               <FontAwesomeIcon icon={faEthereum} className="text-[#141414]" />{" "}
-              <span>0x523...t5542</span>{" "}
+              <span>{`${(user?.walletAddress).slice(
+                0,
+                4
+              )}...${(user?.walletAddress).slice(-4)}`}</span>{" "}
             </p>
-            <p className="my-2 p-1 text-center">
-              {" "}
-              welcome to my hub get your nft account ready to
-            </p>
+          )}
+          {!user?.walletAddress && <p>no wallet connected</p>}
+          <p className="my-2 p-1 text-center">
+            {" "}
+            {user?.bio ? user.bio : "bio"}
+          </p>
 
-            <ConfirmBtn
-              otherStyles={"mb-2 bg-[#ff4ff3]/50 p-3"}
-              title={"edit profile"}
-            />
-          </div>
-          <ProfileTabs
-            otherStyles={""}
-            assets={myAssets}
-            collections={myCollections}
+          <ConfirmBtn
+            otherStyles={"mb-2 bg-[#ff4ff3]/50 p-3"}
+            title={"edit profile"}
+            handleClicked={handleNavigate}
           />
         </div>
+        <ProfileTabs
+          otherStyles={"mt-20"}
+          assets={myAssets}
+          collections={myCollections}
+        />
       </div>
     </div>
   );

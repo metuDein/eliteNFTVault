@@ -18,8 +18,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useDataContext } from "../context/DataProvider";
 
 const NavDropDownMenu = ({ triggerStyle, user }) => {
+  const { setUser } = useDataContext();
+  async function signout(params) {
+    await signOut();
+  }
+
   return (
     <DropdownMenu className={``}>
       <DropdownMenuTrigger>
@@ -40,23 +47,21 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
             }
           </div>
           {user?.walletAddress && (
-            <div className="flex flex-col items-end justify-center mx-[2px]">
-              <p>
+            <div className="flex flex-col items-end justify-center h-9">
+              <p className="text-sm leading-4 p-[1px]">
                 {" "}
                 {(user?.balance).toFixed(5)}{" "}
                 <FontAwesomeIcon
                   icon={faEthereum}
-                  className="text-gradient-to-b from-[#141414] to-[#3c3c3b]"
+                  className="text-gradient-to-r from-[#141414] to-[#3c3c3b]"
                 />{" "}
               </p>
-              <p>
+              <p className="text-sm leading-4">
                 {" "}
                 <span className="w-1 h-1 rounded-full bg-green-600 inline-flex mx-[1px]"></span>
                 {`${(user?.walletAddress)
                   .slice(0, 4)
-                  .toString()}....${(user?.walletAddress)
-                  .slice(-4)
-                  .toString()}`}
+                  .toString()}...${(user?.walletAddress).slice(-4).toString()}`}
               </p>
             </div>
           )}
@@ -70,30 +75,39 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={"/"} className="w-full text-left font-semibold">
+            <Link href={"/user"} className="w-full text-left font-semibold">
               Profile
             </Link>
           </DropdownMenuItem>
           {/* sub menu to create */}
           <DropdownMenuItem>
-            <Link href={"/"} className="w-full text-left font-semibold">
+            <Link
+              href={"/user/createCollection"}
+              className="w-full text-left font-semibold"
+            >
               Create
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={"/"} className="w-full text-left font-semibold">
+            <Link
+              href={"/frequently-asked-questions"}
+              className="w-full text-left font-semibold"
+            >
               FAQs
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={"/"} className="w-full text-left font-semibold">
+            <Link href={"/admin"} className="w-full text-left font-semibold">
               Admin Panel
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href={"/"} className="w-full text-left font-semibold">
+            <button
+              className="w-full text-left font-semibold"
+              onClick={signout}
+            >
               LogOut
-            </Link>
+            </button>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

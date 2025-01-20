@@ -24,14 +24,14 @@ const HomeTabCards = ({ data, index }) => {
       } 
        ${
          index === 0
-           ? "mr-[500px]"
+           ? "mr-[500px] -z-20"
            : index === 1
-           ? "mr-[400px]"
+           ? "mr-[400px] -z-10"
            : index === 2
-           ? "z-30"
+           ? "z-0"
            : index === 3
-           ? "ml-[400px] "
-           : "ml-[500px] -z-10"
+           ? "ml-[400px] -z-10"
+           : "ml-[500px] -z-20"
        }
       `}
     >

@@ -4,16 +4,13 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-import Image from "next/image";
-import Link from "next/link";
-
 import { useDataContext } from "../context/DataProvider";
 import Loading from "../loading/Loading";
 
-const Carousel = () => {
+const SecondCarousel = ({ data }) => {
   const { appData } = useDataContext();
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(data);
 
   // { src: "/assets/nftsample.jpg", name: "Image 1", price: "$100" },
   // { src: "/assets/nftsample.jpg", name: "Image 2", price: "$200" },
@@ -61,23 +58,32 @@ const Carousel = () => {
               index === currentIndex
                 ? "z-0 transform scale-105"
                 : "-z-10 transform scale-90 opacity-60"
-            }`}
+            } transform
+    ${index === currentIndex ? "scale-105" : "scale-95"}
+    ${
+      index === (currentIndex - 1 + images.length) % images.length
+        ? " -translate-x-[10%] sm:-translate-x-1/2"
+        : index === (currentIndex + 1) % images.length
+        ? "translate-x-[10%] sm:translate-x-1/2"
+        : "translate-x-0"
+    }
+    transition-transform duration-300`}
             style={{
               backgroundImage: `url(${item.image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               borderRadius: "10px",
-              transform:
-                index === currentIndex
-                  ? "scale(1.05)"
-                  : `scale(0.95) translateX(${
-                      index ===
-                      (currentIndex - 1 + images.length) % images.length
-                        ? "-10%"
-                        : index === (currentIndex + 1) % images.length
-                        ? "10%"
-                        : "0"
-                    })`,
+              //   transform:
+              //     index === currentIndex
+              //       ? "scale(1.05)"
+              //       : `scale(0.95) translateX(${
+              //           index ===
+              //           (currentIndex - 1 + images.length) % images.length
+              //             ? "-50%"
+              //             : index === (currentIndex + 1) % images.length
+              //             ? "50%"
+              //             : "0"
+              //         })`,
             }}
           />
         ))}
@@ -116,4 +122,4 @@ const Carousel = () => {
   );
 };
 
-export default Carousel;
+export default SecondCarousel;

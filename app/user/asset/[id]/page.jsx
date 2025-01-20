@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 
-const Page = props => {
+const Page = (props) => {
   const params = use(props.params);
   const { appData } = useDataContext();
   const { assets } = appData;
@@ -117,33 +117,33 @@ const Page = props => {
   if (!resolvedParams || !asset) return <Loading otherStyles={"mx-auto"} />;
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center pt-[75px] pb-6">
       <h2 className="text-center text-3xl font-bold text-[#ffffff] mb-3">
         Edit Asset
       </h2>
-      <div className="sm:w-[1184px] h-[532px] rounded-[10px] flex space-x-5 justify-center items-start relative">
+      <div className="sm:w-[1184px] min-h-[532px] rounded-[10px] flex flex-col sm:flex-row sm:space-x-5 justify-center items-center sm:items-start relative">
         {loading && (
           <Loading otherStyles="absolute mx-auto z-30 bg-[#582b71]/50 top-2" />
         )}
         <div>
           <label
             htmlFor="imageupload"
-            className="relative w-[400px] h-[500px] bg-[#ef8bf7]/30 flex items-center justify-center rounded-xl cursor-default"
+            className=" w-[300px] sm:w-[400px] h-[400px] sm:h-[500px] bg-[#ef8bf7]/30 flex items-center justify-center rounded-xl cursor-default mx-auto"
           >
             {image && (
               <Image
                 src={image || "/assets/nftsample.jpg"}
                 alt="upload sample"
-                className="w-full h-[500px] object-cover rounded-xl absolute"
+                className="w-full h-[400px] sm:h-[500px] object-cover rounded-xl"
                 width={"750"}
                 height={"750"}
               />
             )}
           </label>
         </div>
-        <div className="h-[400px] w-[1px] border border-[#ff4ff3] self-center" />
+        <div className="h-[400px] w-[1px] border border-[#ff4ff3] self-center hidden sm:flex" />
         <form onSubmit={handleUpdate}>
-          <p className="text-xl font-semibold mb-2">
+          <p className="text-xl font-semibold mb-2 mt-3 sm:mt-0 ">
             Provide details for your asset.
           </p>
           <InputFields
@@ -172,7 +172,11 @@ const Page = props => {
             placeholder="Select amount for sale"
             inputType="number"
           />
-          <CustomDropdown category={category} setCategory={setCategory} />
+          <CustomDropdown
+            category={category}
+            setCategory={setCategory}
+            otherStyles={"w-[299px]"}
+          />
           <div className="w-[298px] p-3 flex flex-col">
             <label htmlFor="description" className="mb-3">
               Description:
@@ -188,18 +192,20 @@ const Page = props => {
               cols={10}
             />
           </div>
-          <ConfirmBtn
-            title="Update"
-            loading={loading}
-            otherStyles={"p-3 bg-[#ff4ff3]"}
-            handleClicked={handleUpdate}
-          />
-          <ConfirmBtn
-            title="Delete"
-            loading={loading}
-            otherStyles={"p-3 bg-[#cb4747] ml-3"}
-            handleClicked={deleteAsset}
-          />
+          <div className="w-full mx-auto flex items-center justify-center">
+            <ConfirmBtn
+              title="Update"
+              loading={loading}
+              otherStyles={"p-3 bg-[#ff4ff3]"}
+              handleClicked={handleUpdate}
+            />
+            <ConfirmBtn
+              title="Delete"
+              loading={loading}
+              otherStyles={"p-3 bg-[#cb4747] ml-3"}
+              handleClicked={deleteAsset}
+            />
+          </div>
         </form>
       </div>
     </div>
