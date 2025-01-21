@@ -7,6 +7,7 @@ import Loading from "@/components/loading/Loading";
 import { toast } from "react-toastify";
 import CustomDropdown from "@/components/dropdown/CustomDropdown";
 import { useSearchParams } from "next/navigation";
+import ConfirmBtn from "@/components/loading/ConfirmBtn";
 
 const CreateAsset = () => {
   const searchParams = useSearchParams();
@@ -82,17 +83,17 @@ const CreateAsset = () => {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center pt-[75px] pb-6">
       <h2 className="text-center text-3xl font-bold text-[#ffffff] mb-3">
         Create an Asset
       </h2>
-      <div className="sm:w-[1184px] h-[532px] rounded-[10px]  flex space-x-5 justify-center items-start relative">
+      <div className=" w-full sm:max-w-5xl min-h-[532px] rounded-[10px]  flex flex-col sm:flex-row sm:space-x-5 justify-center items-start relative">
         {loading && (
           <Loading
             otherStyles={"absolute mx-auto z-30  bg-[#582b71]/50 top-2"}
           />
         )}
-        <div>
+        <div className="min-h-3 mx-auto">
           <ImageUpload
             image={image}
             setImage={setImage}
@@ -100,8 +101,8 @@ const CreateAsset = () => {
             otherStyles={""}
           />
         </div>
-        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center" />
-        <form onSubmit={submitCreate}>
+        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center sm:flex hidden" />
+        <form onSubmit={submitCreate} className="mt-6 sm:mt-0 mx-auto">
           <p className="text-xl font-semibold mb-2">
             Provide details for your asset.
           </p>
@@ -155,11 +156,13 @@ const CreateAsset = () => {
               cols={10}
             />
           </div>
-          <AuthBtn
-            title={"Create"}
-            otherStyles={"p-4 bg-[#ff4ff3] ml-3"}
-            loading={loading}
-          />
+          <div className="mx-auto flex items-center justify-center">
+            <ConfirmBtn
+              title={"Create"}
+              otherStyles={"p-4 bg-[#ff4ff3] ml-0 sm:ml-3 w-[200px] sm:w-full"}
+              loading={loading}
+            />
+          </div>
         </form>
       </div>
     </div>

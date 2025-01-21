@@ -18,12 +18,13 @@ const page = (props) => {
   const router = useRouter();
   const params = use(props.params);
   const { appData, user } = useDataContext();
-  const { assets } = appData;
+  const { assets, collections } = appData;
 
   const [collAssets, setCollAssets] = useState([]);
 
   const [resolvedParams, setResolvedParams] = useState(null);
   const [asset, setAsset] = useState(null);
+  const [currentCollection, setCurrentCollection] = useState(null);
   const [loading, setLoading] = useState(false);
   const [purchase, setPurchase] = useState("");
   const [fmessage, setFmessage] = useState("");
@@ -45,9 +46,13 @@ const page = (props) => {
       const sameCol = assets.filter(
         (item) => item.collectionName?._id === currentAsset?.collectionName?._id
       );
+      const col = collections.find(
+        (item) => item._id === currentAsset?.collectionName?._id
+      );
       console.log(sameCol);
       setAsset(currentAsset);
       setCollAssets(sameCol);
+      setCurrentCollection(col);
     }
   }, [resolvedParams, assets]);
 
@@ -65,7 +70,7 @@ const page = (props) => {
         return;
       }
 
-      if (!assetColl?.gasfee || assetColl?.gasfee === "unpaid") {
+      if (currentCollection?.gasfee === "unpaid") {
         setLoading(false);
         setPurchase("failed");
         toast.error("Transaction failed.");
@@ -102,14 +107,14 @@ const page = (props) => {
         {purchase === "success" && (
           <PurchaseAlert
             smessage={smessage}
-            otherStyles={"absolute top-5 left-[30%] mx-auto"}
+            otherStyles={"absolute top-5 sm:left-[30%] mx-auto"}
             setPurchase={setPurchase}
           />
         )}
         {purchase === "failed" && (
           <TxAlert
             fmessage={fmessage}
-            otherStyles={"absolute top-5 left-[30%] mx-auto"}
+            otherStyles={"absolute top-5 sm:left-[30%] mx-auto"}
             setPurchase={setPurchase}
           />
         )}

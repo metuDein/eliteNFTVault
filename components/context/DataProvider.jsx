@@ -10,7 +10,9 @@ export const DataProvider = ({ children }) => {
     assets: [],
   });
   const [user, setUser] = useState(null);
-  const [searchResult, setSearchResult] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchResultAssets, setSearchResultAssets] = useState([]);
+  const [searchResultCollections, setSearchResultCollections] = useState([]);
 
   const getUser = async () => {
     const res = await fetch("/api/auth/getuser", { method: "GET" });
@@ -41,6 +43,8 @@ export const DataProvider = ({ children }) => {
           collections: data.collections || [],
           assets: data.assets || [],
         });
+        setSearchResultAssets(data.assets);
+        setSearchResultCollections(data.collections);
       }
     } catch (error) {
       console.log(`${error.name} : ${error.message}`);
@@ -60,8 +64,12 @@ export const DataProvider = ({ children }) => {
       value={{
         appData,
         user,
-        searchResult,
-        setSearchResult,
+        searchResultAssets,
+        searchResultCollections,
+        search,
+        setSearch,
+        setSearchResultCollections,
+        setSearchResultAssets,
         getUser,
         setUser,
         fetchAppData,

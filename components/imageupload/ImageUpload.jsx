@@ -15,15 +15,17 @@ const ImageUpload = ({ title, image, setImage }) => {
   };
 
   return (
-    <div className="w-[500px] min-h-[500px] flex flex-col items-center">
-      <h2 className="w-[400px]">{title}</h2>
+    <div className="w-[300px] sm:w-[500px] h-[400px] sm:h-[500px] flex flex-col items-center">
+      <h2 className="w-[299px] sm:w-[400px] break-words text-[14px] text-center sm:text-left sm:text-xl">
+        {title}
+      </h2>
       <div className="mt-2">
         <label
           htmlFor="imageupload"
-          className="relative w-[400px] h-[500px] bg-[#ef8bf7]/30 flex items-center justify-center rounded-xl cursor-pointer"
+          className="relative w-[200px] sm:w-[400px] h-[300px] sm:h-[500px] bg-[#ef8bf7]/30 flex items-center justify-center rounded-xl cursor-pointer"
         >
           {!image && (
-            <div>
+            <div className="">
               <FontAwesomeIcon
                 icon={faCloudArrowUp}
                 className="text-[#ff4ff3] text-[100px]"
@@ -34,7 +36,7 @@ const ImageUpload = ({ title, image, setImage }) => {
             <Image
               src={image || "/assets/nftsample.jpg"}
               alt="upload sample"
-              className="w-full h-[500px] object-cover rounded-xl absolute"
+              className="w-full h-[300px] sm:h-[500px] object-cover rounded-xl absolute"
               width={"750"}
               height={"750"}
             />

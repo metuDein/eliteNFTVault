@@ -17,14 +17,14 @@ const CustomDropdown = ({ category, setCategory, otherStyles }) => {
   return (
     <DropdownMenu className={`${otherStyles}`}>
       <DropdownMenuTrigger>
-        <button
+        <p
           variant="outline"
           className="w-[299px] sm:w-[350px] bg-[#ff4ff3] p-4 rounded-xl flex items-center justify-between"
         >
           {!category && <span>Select a Category</span>}
           {category && <span>{category}</span>}
           <FontAwesomeIcon icon={faChevronDown} className="float-right mr-3" />
-        </button>
+        </p>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[300px] bg-[#ff4ff3] p-4 rounded-xl ">
         <DropdownMenuRadioGroup value={category} onValueChange={setCategory}>

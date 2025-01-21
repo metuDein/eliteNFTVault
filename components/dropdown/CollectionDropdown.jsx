@@ -19,14 +19,14 @@ const CollectionDropdown = ({ blockChain, setBlockChain, otherStyles }) => {
   return (
     <DropdownMenu className={`${otherStyles}`}>
       <DropdownMenuTrigger>
-        <button
+        <p
           variant="outline"
-          className="w-[350px] bg-[#ff4ff3] p-4 rounded-xl flex items-center justify-between"
+          className="w-[299px] sm:w-[350px] bg-[#ff4ff3] p-4 rounded-xl flex items-center justify-between"
         >
           <span>{!blockChain && "Select a Blockchain"}</span>
           <span>{blockChain && blockChain}</span>
           <FontAwesomeIcon icon={faChevronDown} className="float-right mr-3" />
-        </button>
+        </p>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[300px] bg-[#ff4ff3] p-4 rounded-xl ">
         <DropdownMenuRadioGroup

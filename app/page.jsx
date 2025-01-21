@@ -5,10 +5,14 @@ import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import SectionSecond from "@/components/hompage/SectionSecond";
 import HomeTab from "@/components/tabcomponent/HomeTab";
 import SellerSection from "@/components/hompage/SellerSection";
-import StepsCard from "@/components/NFtcards/StepsCard";
 import StepsSection from "@/components/hompage/StepsSection";
+import { useRouter } from "next/navigation";
+import { useDataContext } from "@/components/context/DataProvider";
 
 export default function Home() {
+  const router = useRouter();
+  const { user } = useDataContext();
+
   return (
     <div className="min-h-screen w-full p-2 font-[family-name:var(--font-dm-sans)]">
       <main className="flex flex-col items-center justify-center">
@@ -33,12 +37,15 @@ export default function Home() {
               today!
             </p>
 
-            <ConfirmBtn
-              title={"Get Started"}
-              otherStyles={
-                "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-full sm:w-[140px] mt-5 text-[16px] font-semibold mx-auto sm:mx-0 self-center"
-              }
-            />
+            {!user?.username && (
+              <ConfirmBtn
+                title={"Get Started"}
+                otherStyles={
+                  "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-full sm:w-[140px] mt-5 text-[16px] font-semibold mx-auto sm:mx-0 self-center"
+                }
+                handleClicked={() => router.push("/register")}
+              />
+            )}
           </div>
           <div className="self-center mx-auto mt-4 sm:mt-0">
             <Carousel />
@@ -71,6 +78,7 @@ export default function Home() {
               otherStyles={
                 "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-full sm:w-[250px] mt-5 text-[16px] font-semibold self-center"
               }
+              handleClicked={() => router.push("/marketplace/explore")}
             />
           </div>
         </section>
@@ -119,6 +127,7 @@ export default function Home() {
               otherStyles={
                 "p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[250px] mt-5 text-[16px] font-semibold"
               }
+              handleClicked={() => router.push("/user/createCollection")}
             />
           </div>
           <div className=" mt-3 sm:mt-0">

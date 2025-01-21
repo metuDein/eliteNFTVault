@@ -10,7 +10,7 @@ const PurchaseAlert = ({ otherStyles, smessage, setPurchase }) => {
 
   return (
     <div
-      className={`w-[332px] h-[511] rounded-[10px]  flex flex-col p-3 items-center justify-center bg-[#582b71] ${otherStyles}`}
+      className={`w-[299px] min-h-[400px] sm:w-[332px] sm:h-[511] rounded-[10px]  flex flex-col p-3 items-center justify-center bg-[#582b71] ${otherStyles}`}
     >
       <div className="w-[121px] h-[121px] bg-white rounded-full mb-6">
         <FontAwesomeIcon

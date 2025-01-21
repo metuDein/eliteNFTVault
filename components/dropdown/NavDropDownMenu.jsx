@@ -16,9 +16,10 @@ import { signOut } from "next-auth/react";
 import { useDataContext } from "../context/DataProvider";
 
 const NavDropDownMenu = ({ triggerStyle, user }) => {
-  const { setUser } = useDataContext();
+  const { setUser, user } = useDataContext();
   async function signout(params) {
     await signOut();
+    setUser({});
   }
 
   return (
@@ -90,11 +91,13 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
               FAQs
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href={"/admin"} className="w-full text-left font-semibold">
-              Admin Panel
-            </Link>
-          </DropdownMenuItem>
+          {user?.roles?.Admin === 5150 && (
+            <DropdownMenuItem>
+              <Link href={"/admin"} className="w-full text-left font-semibold">
+                Admin Panel
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem>
             <button
               className="w-full text-left font-semibold"

@@ -6,7 +6,8 @@ import ShoppingCard from "../NFtcards/ShoppingCard";
 import CollectionCard from "../NFtcards/CollectionCard";
 
 const Tabs = ({}) => {
-  const { appData } = useDataContext();
+  const { appData, searchResultCollections, searchResultAssets } =
+    useDataContext();
   const { assets, collections } = appData;
   const [highest, setHighest] = useState(null);
   const [lowest, setLowest] = useState(null);
@@ -79,23 +80,22 @@ const Tabs = ({}) => {
         {/* Tabs display */}
         <div className="w-full p-1 min-h-screen mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center">
           {activeTab === 0 &&
-            [...assets]
+            [...searchResultAssets]
               .reverse()
               .map((item, index) => (
                 <ShoppingCard key={item?._id} data={item} />
               ))}
-          {activeTab === 0 && !assets && (
+          {activeTab === 0 && !searchResultAssets && (
             <p className="text-white font-bold text-xl text-center">
               {" "}
               No Assets found{" "}
             </p>
           )}
           {activeTab === 1 &&
-            collections &&
-            collections.map((item, i) => (
-              <CollectionCard key={i} data={item} />
-            ))}
-          {activeTab === 1 && !collections && (
+            [...searchResultCollections]
+              .reverse()
+              .map((item, i) => <CollectionCard key={i} data={item} />)}
+          {activeTab === 1 && !searchResultCollections && (
             <p className="text-white font-bold text-xl text-center">
               {" "}
               No collections found{" "}

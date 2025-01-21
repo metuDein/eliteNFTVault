@@ -15,7 +15,7 @@ const collectionSchema = new Schema({
         type: String,
         default: 'unpaid'
     },
-    gasFeeAmount: {
+    gasfeeamount: {
         type: Number,
         default: 0.0
     },

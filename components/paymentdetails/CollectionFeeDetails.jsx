@@ -4,7 +4,7 @@ import { faEthereum } from "@fortawesome/free-brands-svg-icons";
 
 const CollectionFeeDetails = ({ otherStyles, name }) => {
   return (
-    <div className={`${otherStyles} bg-[#582b71] flex flex-col w-[304px] `}>
+    <div className={`${otherStyles} bg-[#582b71] flex flex-col sm:w-[304px] `}>
       <p className="text-white font-medium py-2 px-2">Summary</p>
       <div className="border border-solid border-[#ff4ff4]" />
       <div className="px-2 flex items-center justify-between my-3">
@@ -13,7 +13,7 @@ const CollectionFeeDetails = ({ otherStyles, name }) => {
           <p>BlockChain :</p>
         </div>
         <div className="flex flex-col">
-          <p> {name} </p>
+          <p className="break-words w-[70px]"> {name} </p>
           <p>
             ERC 20{" "}
             <FontAwesomeIcon

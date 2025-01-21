@@ -22,8 +22,16 @@ import { usePathname, useRouter } from "next/navigation";
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, getUser } = useDataContext();
-  const [search, setSearch] = useState("");
+  const {
+    user,
+    getUser,
+    setSearchResultCollections,
+    setSearchResultAssets,
+    search,
+    setSearch,
+    appData,
+  } = useDataContext();
+  const { assets, collections } = appData;
   const [keyTab, setKeyTabs] = useState(false);
   const [steps, setSteps] = useState(1);
 
@@ -39,6 +47,38 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
 
   const [mobileSearchBar, setMobileSearchBar] = useState(false);
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    let filteredCol;
+    let filteredAssets;
+    if (search.length > 1) {
+      router.push("/marketplace/explore");
+
+      filteredAssets = assets.filter((asset) =>
+        asset.name.toLowerCase().includes(search.toLowerCase())
+      );
+      filteredCol = collections.filter((collection) =>
+        collection.name.toLowerCase().includes(search.toLowerCase())
+      );
+      if (filteredAssets) {
+        setSearchResultAssets(filteredAssets);
+      } else {
+        setSearchResultAssets(appData.assets);
+      }
+      if (filteredCol) {
+        setSearchResultCollections(filteredCol);
+      } else {
+        setSearchResultCollections(appData.collections);
+      }
+      return;
+    } else {
+      setSearchResultAssets(appData?.assets);
+      setSearchResultCollections(appData?.collections);
+      return;
+    }
+  }
 
   function nextStep() {
     if (steps === 2 && !provider)
@@ -152,7 +192,7 @@ const Header = () => {
   }, [privateKey, provider]);
 
   return (
-    <header className="w-full p-2 fixed shadow-2xl shadow-black flex items-center justify-center z-10 bg-[#281549]/80">
+    <header className="w-full p-2 fixed shadow-2xl shadow-black flex items-center justify-center z-10 bg-[#281549]/80 h-[61px]">
       <nav className="flex items-center justify-between max-w-7xl w-full relative">
         <Link href={"/"} className="flex items-center justify-center">
           <Image
@@ -173,7 +213,10 @@ const Header = () => {
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} className="text-white" />
         </button>
-        <form className="hidden sm:flex items-center justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px]">
+        <form
+          className="hidden sm:flex items-center justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px] h-[32px]"
+          onSubmit={handleSearch}
+        >
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             className="text-black text-[17px]"
@@ -183,11 +226,14 @@ const Header = () => {
             placeholder="find a collection or asset"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0"
+            className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0 w-full"
           />
         </form>
         {mobileSearchBar && (
-          <form className="flex sm:hidden absolute top-full items-center  justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px]">
+          <form
+            className="flex sm:hidden absolute top-full items-center  justify-start p-1 rounded-[3px] bg-[#d9d9d9]/30 w-[300px] h-[32px]"
+            onSubmit={handleSearch}
+          >
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               className="text-black text-[17px]"
@@ -197,7 +243,7 @@ const Header = () => {
               placeholder="find a collection or asset"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0"
+              className="bg-transparent text-white placeholder:text-[#d9d9d9] mx-2 border-0 outline-0 w-full"
             />
           </form>
         )}
@@ -245,9 +291,11 @@ const Header = () => {
                 Explore
               </Link>
 
-              <div className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-1 sm:mx-4">
-                <FontAwesomeIcon icon={faBell} />
-              </div>
+              {user?.walletAddress && (
+                <div className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-1 sm:mx-4 relative">
+                  <FontAwesomeIcon icon={faBell} />
+                </div>
+              )}
             </div>
             <div className="flex items-center justify-center">
               <NavDropDownMenu user={user} />

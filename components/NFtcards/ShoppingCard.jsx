@@ -25,7 +25,7 @@ const ShoppingCard = ({ data }) => {
   }
 
   return (
-    <div className="w-[300px]  rounded-[10px]  flex flex-col p-3 items-start justify-start bg-[#ef8bf7]/50">
+    <div className="w-[300px] sm:h-[494px]  rounded-[10px]  flex flex-col p-3 items-start justify-start bg-[#ef8bf7]/50">
       <Image
         src={data?.image || "/assets/nftsample.jpg"}
         alt="nft sample"

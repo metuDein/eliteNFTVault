@@ -20,7 +20,7 @@ const ConnectWallet = ({ setWalletAddress }) => {
       <ConfirmBtn
         title={"Connect Wallet"}
         otherStyles={
-          " mx-2 p-3 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[150px] text-[16px] font-semibold self-center"
+          " mx-2 sm:p-3 p-1 bg-gradient-to-r from-[#843eff] to-[#fe4ff2] rounded-[10px] w-[100px] sm:w-[150px] text-[14px] sm:text-[16px] font-semibold self-center"
         }
         handleClicked={open}
       />

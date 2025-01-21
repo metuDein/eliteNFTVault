@@ -3,7 +3,7 @@ import Image from "next/image";
 const Loading = ({ otherStyles }) => {
   return (
     <div
-      className={`w-[332px] h-[511] rounded-[10px]  flex flex-col p-3 items-center justify-center  ${otherStyles} `}
+      className={`w-[299px] h-[400px] sm:w-[332px] sm:h-[511] rounded-[10px]  flex flex-col p-3 items-center justify-center  ${otherStyles} `}
     >
       <div className="w-full flex items-center justify-around">
         <Image

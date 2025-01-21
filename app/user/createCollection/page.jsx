@@ -12,13 +12,20 @@ import {
   useAccount,
   useSendTransaction,
   useWaitForTransactionReceipt,
+  useConnect,
+  injected,
 } from "wagmi";
 import { parseEther } from "viem";
-import { useAppKit } from "@reown/appkit/react";
+import { useAppKit, useAppKitNetwork } from "@reown/appkit/react";
+import ConfirmBtn from "@/components/loading/ConfirmBtn";
+import { mainnet, sepolia } from "viem/chains";
+import { switchChain } from "viem/actions";
 
 const page = () => {
   const { open } = useAppKit();
-  const { address, isConnected, chainId } = useAccount();
+  const { chainId, switchNetwork } = useAppKitNetwork();
+  const { connectAsync } = useConnect();
+  const { address, isConnected } = useAccount();
   const { data: hash, isPending, sendTransaction } = useSendTransaction();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -29,26 +36,44 @@ const page = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [blockChain, setBlockChain] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(isConfirming);
   const [userId, setUserId] = useState("");
+  const [payment, setPayment] = useState(null);
 
-  async function submitCreate(e) {
-    e.preventDefault();
-    console.log(name, blockChain, image.substring(0, 10));
-    if (!name || !blockChain || !image || !userId) {
-      toast.error("All fields required");
-      return;
+  const appaddress = process.env.BROKER_WALLET;
+  async function payGasfee() {
+    try {
+      if (!name || !blockChain || !image || !userId) {
+        toast.error("All fields required");
+        return;
+      }
+      if (!address) {
+        open();
+        return;
+      }
+      if (chainId !== mainnet.id) {
+        await switchNetwork({
+          id: "eip155:1",
+        })
+          .then(() => {
+            console.log("Successfully switched to Ethereum Mainnet.");
+          })
+          .catch((error) => {
+            console.error("Failed to switch network:", error.message);
+          });
+      }
+      await sendTransaction({
+        to: "0xa6eA5Fa590DE25461600D376Cfd9B0Fc1288dF72",
+        value: parseEther("0.0025"),
+      });
+      console.log(hash);
+    } catch (error) {
+      console.log(error.name, ": ", error.message);
     }
+  }
+  async function submitCreate() {
     setLoading(true);
     try {
-      await payGasfee();
-
-      if (!isConfirmed) {
-        toast.error(
-          "failed to create collection or insuficient balance to create a collection"
-        );
-      }
-
       const response = await fetch("/api/mediaupload", {
         method: "POST",
         body: JSON.stringify({
@@ -90,21 +115,14 @@ const page = () => {
     }
   }
 
-  const appaddress = process.env.BROKER_WALLET;
-  async function payGasfee() {
-    try {
-      if (!address) {
-        open();
-      }
-      sendTransaction({
-        to: "0x9247ebcd3cce95918b344b07d3a1b02884158e69",
-        value: parseEther("0.0004"),
-      });
-      console.log(hash);
-    } catch (error) {
-      console.log(error.name, ": ", error.message);
+  useEffect(() => {
+    if (isConfirmed) {
+      setPayment("paid");
     }
-  }
+    if (isConfirmed && payment === "paid") {
+      submitCreate();
+    }
+  }, [isConfirming, isConfirmed, payment]);
 
   useEffect(() => {
     if (user) {
@@ -113,17 +131,26 @@ const page = () => {
   }, [user]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center">
-      <h2 className="text-center text-3xl font-bold text-[#ffffff] mb-3">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center pt-[75px] pb-6">
+      <h2 className="text-center text-2xl sm:text-3xl font-bold text-[#ffffff] mb-3">
         Create a collection
       </h2>
-      <div className="sm:w-[1184px] h-[532px] rounded-[10px]  flex space-x-5 justify-center items-start relative">
+      <div className="sm:w-[1184px] min:h-[532px] rounded-[10px]  flex flex-col sm:flex-row sm:space-x-2 justify-center items-start relative">
         {loading && (
           <Loading
-            otherStyles={"absolute mx-auto z-30  bg-[#582b71]/50 top-2"}
+            otherStyles={
+              "absolute mx-auto z-30  bg-[#582b71]/50 sm:top-2 bottom-2"
+            }
           />
         )}
-        <div>
+        {isConfirming && (
+          <Loading
+            otherStyles={
+              "absolute mx-auto z-30  bg-[#582b71]/50 sm:top-2 bottom-2"
+            }
+          />
+        )}
+        <div className="mx-auto">
           <ImageUpload
             image={image}
             setImage={setImage}
@@ -132,9 +159,12 @@ const page = () => {
             otherStyles={""}
           />
         </div>
-        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center" />
-        <form onSubmit={submitCreate}>
-          <p className="text-xl font-semibold">
+        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center sm:flex hidden" />
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="mt-2 sm:mt-0 mx-auto p-2 sm:p-0"
+        >
+          <p className="text-xl font-semibold text-center sm:text-left">
             Provide details for your collection
           </p>
           <InputFields
@@ -147,14 +177,17 @@ const page = () => {
           <CollectionDropdown
             blockChain={blockChain}
             setBlockChain={setBlockChain}
-            otherStyles={"mb-2"}
+            otherStyles={"mb-2 w-[299px] sm:w-[370px] mx-auto"}
           />
           <CollectionFeeDetails name={name} otherStyles={"my-2 mx-auto"} />
-          <AuthBtn
-            title={"Create"}
-            otherStyles={"p-4 bg-[#ff4ff3] ml-3"}
-            loading={loading}
-          />
+          <div className="flex items-center justify-center">
+            <ConfirmBtn
+              title={"Create"}
+              otherStyles={"p-4 bg-[#ff4ff3] ml-0 sm:ml-3 w-[200px] sm:w-full"}
+              loading={loading}
+              handleClicked={payGasfee}
+            />
+          </div>
         </form>
       </div>
     </div>
