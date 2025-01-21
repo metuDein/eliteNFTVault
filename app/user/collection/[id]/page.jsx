@@ -8,8 +8,26 @@ import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import ShoppingCard from "@/components/NFtcards/ShoppingCard";
 import { useState, useEffect, use } from "react";
 import Loading from "@/components/loading/Loading";
+import {
+  useAccount,
+  useSendTransaction,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import { parseEther } from "viem";
+import { useAppKit } from "@reown/appkit/react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const page = (props) => {
+  const router = useRouter();
+  const { open } = useAppKit();
+  const { address, isConnected, chainId } = useAccount();
+  const { data: hash, isPending, sendTransaction } = useSendTransaction();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+
   const params = use(props.params);
   const { appData, user } = useDataContext();
   const { assets, collections } = appData;
@@ -21,6 +39,25 @@ const page = (props) => {
   const [totalValue, setTotalValue] = useState(0);
   const [totalLike, setTotalLikes] = useState(0);
   const [totalViews, setTotalLikesViews] = useState(0);
+
+  const appaddress = process.env.BROKER_WALLET;
+  async function payGasfee() {
+    try {
+      if (!address) {
+        open();
+      }
+      sendTransaction({
+        to: "0x9247ebcd3cce95918b344b07d3a1b02884158e69",
+        value: parseEther("0.0004"),
+      });
+      if (isConfirmed) {
+        toast.success("payment successful");
+      }
+      console.log(hash);
+    } catch (error) {
+      console.log(error.name, ": ", error.message);
+    }
+  }
 
   useEffect(() => {
     async function fetchParams() {
@@ -86,7 +123,8 @@ const page = (props) => {
           </div>
         </div>
         {collection?.gasFee === "unpaid" && (
-          <div className="bg-white  border-l-8 border-0 border-[#cb4747] w-[300px]  sm:w-[357px] py-3 flex flex-col justify-around">
+          <div className="bg-white  border-l-8 border-0 border-[#cb4747] w-[300px]  sm:w-[357px] py-3 flex flex-col justify-around relative">
+            {isPending && <Loading otherStyles={"absolute"} />}
             <h3 className="font-bold text-[#cb4747] pl-3">
               <FontAwesomeIcon icon={faTriangleExclamation} /> warning
             </h3>
@@ -104,6 +142,7 @@ const page = (props) => {
             <ConfirmBtn
               title={"Pay now"}
               otherStyles={"bg-[#cb4747] p-3 mx-auto"}
+              handleClicked={payGasfee}
             />
           </div>
         )}
@@ -147,6 +186,9 @@ const page = (props) => {
         <ConfirmBtn
           title={"Add Asset"}
           otherStyles={"bg-[#ff4ff3] p-4 w-[300px]"}
+          handleClicked={() =>
+            router.push(`/user/createAsset?collectionId=${collection._id}`)
+          }
         />
         <ConfirmBtn
           title={"Delete collection"}

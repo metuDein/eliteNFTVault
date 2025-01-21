@@ -5,7 +5,7 @@ import { DataProvider } from "@/components/context/DataProvider";
 import { ToastContainer } from "react-toastify";
 import Footer from "@/components/navigation/Footer";
 import Header from "@/components/navigation/Header";
-import { AppKit } from "@/components/context/AppKit";
+import AppKit from "@/components/context/AppKit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

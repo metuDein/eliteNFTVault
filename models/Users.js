@@ -58,7 +58,8 @@ const userSchema = new Schema({
         type: String,
         default: ''
     },
-    bio: String
+    bio: String,
+    walletProvider: String
 }, {
     timestamps: true
 })

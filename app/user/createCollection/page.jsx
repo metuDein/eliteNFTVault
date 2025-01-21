@@ -8,8 +8,23 @@ import CollectionDropdown from "@/components/dropdown/CollectionDropdown";
 import CollectionFeeDetails from "@/components/paymentdetails/CollectionFeeDetails";
 import { toast } from "react-toastify";
 import { useDataContext } from "@/components/context/DataProvider";
+import {
+  useAccount,
+  useSendTransaction,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import { parseEther } from "viem";
+import { useAppKit } from "@reown/appkit/react";
 
 const page = () => {
+  const { open } = useAppKit();
+  const { address, isConnected, chainId } = useAccount();
+  const { data: hash, isPending, sendTransaction } = useSendTransaction();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+
   const { user } = useDataContext();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -26,6 +41,14 @@ const page = () => {
     }
     setLoading(true);
     try {
+      await payGasfee();
+
+      if (!isConfirmed) {
+        toast.error(
+          "failed to create collection or insuficient balance to create a collection"
+        );
+      }
+
       const response = await fetch("/api/mediaupload", {
         method: "POST",
         body: JSON.stringify({
@@ -64,6 +87,22 @@ const page = () => {
       console.log(error.name, error.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  const appaddress = process.env.BROKER_WALLET;
+  async function payGasfee() {
+    try {
+      if (!address) {
+        open();
+      }
+      sendTransaction({
+        to: "0x9247ebcd3cce95918b344b07d3a1b02884158e69",
+        value: parseEther("0.0004"),
+      });
+      console.log(hash);
+    } catch (error) {
+      console.log(error.name, ": ", error.message);
     }
   }
 
