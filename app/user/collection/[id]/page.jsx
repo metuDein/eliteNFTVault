@@ -46,7 +46,6 @@ const page = (props) => {
   const [withdrawalTab, setWithdrawalTab] = useState(false);
   const [withdrawalMsg, setWithdrawalMsg] = useState("processing payment...");
 
-  const appaddress = process.env.BROKER_WALLET;
   async function payGasfee() {
     try {
       if (!address) {

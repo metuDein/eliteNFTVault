@@ -40,7 +40,6 @@ const page = () => {
   const [userId, setUserId] = useState("");
   const [payment, setPayment] = useState(null);
 
-  const appaddress = process.env.BROKER_WALLET;
   async function payGasfee() {
     try {
       if (!name || !blockChain || !image || !userId) {
