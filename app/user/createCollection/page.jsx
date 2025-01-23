@@ -17,8 +17,10 @@ import { parseEther } from "viem";
 import { useAppKit, useAppKitNetwork } from "@reown/appkit/react";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
 import { mainnet } from "viem/chains";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const { open } = useAppKit();
   const { chainId, switchNetwork } = useAppKitNetwork();
   const { address, isConnected } = useAccount();
@@ -28,7 +30,7 @@ const page = () => {
       hash,
     });
 
-  const { user } = useDataContext();
+  const { user, fetchAppData } = useDataContext();
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [blockChain, setBlockChain] = useState("");
@@ -101,6 +103,7 @@ const page = () => {
         }
         if (res.ok) {
           toast.success("Collection created");
+          await fetchAppData();
           router.push("/user");
         }
       }

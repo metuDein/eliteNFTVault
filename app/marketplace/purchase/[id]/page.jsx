@@ -81,6 +81,7 @@ const page = (props) => {
       } else {
         setLoading(false);
         setPurchase("success");
+
         setSmessage(`The purchase of ${asset.name} has been completed.`);
         return;
       }
