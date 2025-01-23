@@ -44,7 +44,7 @@ const SecondCarousel = ({ data }) => {
       const last10 = [...assets].slice(-10);
       setImages(last10);
     }
-  }, [appData]);
+  }, [appData, data]);
 
   if (!appData) return <Loading otherStyles={"mx-auto"} />;
 
