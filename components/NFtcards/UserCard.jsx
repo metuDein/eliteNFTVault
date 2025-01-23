@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const SellerCard = ({ data, index }) => {
+const UserCard = ({ data, index, link }) => {
   return (
-    <div className="flex items-start justify-center">
+    <Link href={link} className="flex items-start justify-center h-[95px]">
       <p> {index + 1}. </p>
       <div className="mx-5">
         {data?.image && (
@@ -32,7 +33,7 @@ const SellerCard = ({ data, index }) => {
         </p>
         <p className="text-white text-[12px]"> {data?.balance} ETH</p>
       </div>
-    </div>
+    </Link>
   );
 };
-export default SellerCard;
+export default UserCard;

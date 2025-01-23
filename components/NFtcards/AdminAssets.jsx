@@ -8,20 +8,13 @@ import { useDataContext } from "../context/DataProvider";
 import ConfirmBtn from "../loading/ConfirmBtn";
 import { useState } from "react";
 
-const ShoppingCard = ({ data }) => {
+const AdminAssets = ({ data, link }) => {
   const { user } = useDataContext();
   const router = useRouter();
   const [btnText, setBtnText] = useState("Buy");
 
   function handleNavigate() {
-    if (!data?.owner?.username) {
-      router.push(`/marketplace/purchase/${data?._id}`);
-    } else if (data?.owner?.username === user?.username) {
-      setBtnText("Edit");
-      router.push(`/user/asset/${data?._id}`);
-    } else {
-      router.push(`/marketplace/purchase/${data?._id}`);
-    }
+    router.push(link);
   }
 
   return (
@@ -55,10 +48,10 @@ const ShoppingCard = ({ data }) => {
       </div>
       <ConfirmBtn
         otherStyles={"bg-[#ef8bf7] p-3 w-full"}
-        title={`${data?.owner?.username === user?.username ? "Edit" : "Buy"}`}
+        title={"Edit"}
         handleClicked={handleNavigate}
       />
     </div>
   );
 };
-export default ShoppingCard;
+export default AdminAssets;

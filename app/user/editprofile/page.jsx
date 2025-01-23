@@ -168,7 +168,7 @@ const page = () => {
       <h2 className="text-center text-3xl font-bold text-[#ffffff] mb-3">
         Profile Details
       </h2>
-      <div className=" rounded-[10px]  flex justify-center items-start relative">
+      <div className=" rounded-[10px] flex  flex-col sm:flex-row justify-center items-start relative">
         <div className="mx-3">
           <ImageUpload
             image={image}
@@ -177,7 +177,7 @@ const page = () => {
             otherStyles={""}
           />
         </div>
-        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center mx=3" />
+        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center sm:mx-3 hidden sm:flex" />
         {tab === "view" && (
           <div className="flex flex-col items-start justify-start flex-1 self-center mx-3">
             <div className="w-full">
