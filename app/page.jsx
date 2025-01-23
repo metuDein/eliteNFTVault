@@ -47,7 +47,7 @@ export default function Home() {
               />
             )}
           </div>
-          <div className="self-center mx-auto mt-4 sm:mt-0">
+          <div className="mx-auto sm:mx-0 mt-4 sm:mt-0">
             <Carousel />
           </div>
           {/* site stats */}
@@ -83,7 +83,7 @@ export default function Home() {
           </div>
         </section>
         {/* third section */}
-        <section className="max-w-4xl min-h-screen w-full flex flex-col items-start justify-between my-10">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col items-start justify-between sm:my-10">
           <div className="mx-auto">
             <h3 className="text-[35px] font-semibold mb-3 text-center">
               Our lastest NFT Assets

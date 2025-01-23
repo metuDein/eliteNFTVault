@@ -17,7 +17,7 @@ const CollectionCard = ({ data, link }) => {
         height={"1000"}
         className="w-full h-[150px] mx-auto mb-2 absolute object-cover top-0"
       />
-      <div className="z-30 ">
+      <div className="z-0">
         <Image
           src={"/assets/profilepic.jpg"}
           alt="collection owner"

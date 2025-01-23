@@ -10,8 +10,8 @@ export async function POST(req) {
 		let transport = nodemailer.createTransport({
 			service: "gmail",
 			auth: {
-				user: "maxmetadein@gmail.com", // Your Gmail address
-				pass: "rqtt awsv uxmm kpcp", // Your Gmail password or App password (recommended)
+				user: process.env.GOOGLE_APP_USER, // Your Gmail address
+				pass: process.env.GOOGLE_APP_PASSWORD, // Your Gmail password or App password (recommended)
 			},
 		});
 
@@ -129,7 +129,7 @@ export async function POST(req) {
 														<tr>
 															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
 																<div class="alignment" align="center" style="line-height:10px">
-																	<div style="max-width: 78px;"><img src="https://www.infinitefirms.pro/_next/image?url=%2Fassets%2Flogo%2Flogo.png&w=64&q=75" style="display: block; height: auto; border: 0; width: 100%;" width="78" alt="Play Button in Speech Bubble Icon" title="Play Button in Speech Bubble Icon" height="auto"></div>
+																	<div style="max-width: 78px;"><img src="https://www.elitenftvault.pro/_next/image?url=%2Fassets%2Flogo.png&w=640&q=75" style="display: block; height: auto; border: 0; width: 100%;" width="78" alt="Play Button in Speech Bubble Icon" title="Play Button in Speech Bubble Icon" height="auto"></div>
 																</div>
 															</td>
 														</tr>
@@ -224,7 +224,7 @@ export async function POST(req) {
 														<tr>
 															<td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
 																<div class="alignment" align="center" style="line-height:10px">
-																	<div style="max-width: 146.25px;"><img src="https://www.infinitefirms.pro/_next/image?url=%2Fassets%2Flogo%2Flogo.png&w=64&q=75" style="display: block; height: auto; border: 0; width: 100%;" width="146.25" alt="Your Logo" title="Your Logo" height="auto"></div>
+																	<div style="max-width: 146.25px;"><img src="https://www.elitenftvault.pro/_next/image?url=%2Fassets%2Flogo.png&w=640&q=75" style="display: block; height: auto; border: 0; width: 100%;" width="146.25" alt="Your Logo" title="Your Logo" height="auto"></div>
 																</div>
 															</td>
 														</tr>
@@ -234,7 +234,7 @@ export async function POST(req) {
 															<td class="pad">
 																<div style="font-family: sans-serif">
 																	<div class style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5;">
-																		<p style="margin: 0; text-align: center; font-size: 14px; mso-line-height-alt: 21px;">The Infinitefirms Team.</p>
+																		<p style="margin: 0; text-align: center; font-size: 14px; mso-line-height-alt: 21px;">The EliteNFTVault Team.</p>
 																	</div>
 																</div>
 															</td>
@@ -272,10 +272,7 @@ export async function POST(req) {
 															<td class="pad" style="vertical-align: middle; color: #1e0e4b; font-family: 'Inter', sans-serif; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;"><!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
 																<!--[if !vml]><!-->
 																<table class="icons-inner" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; padding-left: 0px; padding-right: 0px;" cellpadding="0" cellspacing="0" role="presentation"><!--<![endif]-->
-																	<tr>
-																		<td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="http://designedwithbeefree.com/" target="_blank" style="text-decoration: none;"><img class="icon" alt="Beefree Logo" src="https://d1oco4z2z1fhwp.cloudfront.net/assets/Beefree-logo.png" height="auto" width="34" align="center" style="display: block; height: auto; margin: 0 auto; border: 0;"></a></td>
-																		<td style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center; line-height: normal;"><a href="http://designedwithbeefree.com/" target="_blank" style="color: #1e0e4b; text-decoration: none;">Designed with Beefree</a></td>
-																	</tr>
+																	
 																</table>
 															</td>
 														</tr>

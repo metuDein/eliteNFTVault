@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
     users: [],
     collections: [],
     assets: [],
+    notifications: [],
   });
   const [user, setUser] = useState(null);
   const [search, setSearch] = useState("");
@@ -42,6 +43,7 @@ export const DataProvider = ({ children }) => {
           users: data.users || [],
           collections: data.collections || [],
           assets: data.assets || [],
+          notifications: data.notifications || [],
         });
         setSearchResultAssets(data.assets);
         setSearchResultCollections(data.collections);

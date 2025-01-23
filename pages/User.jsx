@@ -16,6 +16,7 @@ const User = () => {
 
   const [myAssets, setMyAssets] = useState([]);
   const [myCollections, setMyCollections] = useState([]);
+  const [myAlerts, setMyAlerts] = useState([]);
 
   function handleNavigate() {
     router.push("/user/editprofile");
@@ -23,7 +24,7 @@ const User = () => {
 
   useEffect(() => {
     if (appData) {
-      const { assets, collections } = appData;
+      const { assets, collections, notifications } = appData;
       const myAssets = assets.filter(
         (item, i) => item?.owner?.username === username
       );
@@ -31,8 +32,12 @@ const User = () => {
       const myCollections = collections.filter(
         (item) => item?.owner?.username === username
       );
+      const myAlerts = notifications.filter(
+        (item) => item?.reciever?.username === username
+      );
       setMyAssets(myAssets);
       setMyCollections(myCollections);
+      setMyAlerts(myAlerts);
     }
   }, [appData]);
 
@@ -79,11 +84,17 @@ const User = () => {
             title={"edit profile"}
             handleClicked={handleNavigate}
           />
+          <ConfirmBtn
+            otherStyles={"mb-2 bg-[#ff4ff3]/80 p-3"}
+            title={"Create"}
+            handleClicked={() => router.push("/user/createCollection")}
+          />
         </div>
         <ProfileTabs
           otherStyles={"mt-20"}
           assets={myAssets}
           collections={myCollections}
+          activity={myAlerts}
         />
       </div>
     </div>

@@ -16,7 +16,7 @@ import { signOut } from "next-auth/react";
 import { useDataContext } from "../context/DataProvider";
 
 const NavDropDownMenu = ({ triggerStyle, user }) => {
-  const { setUser, user } = useDataContext();
+  const { setUser } = useDataContext();
   async function signout(params) {
     await signOut();
     setUser({});
@@ -31,7 +31,7 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
           }`}
         >
           <div>
-            {
+            {user?.image && (
               <Image
                 src={user?.image}
                 alt="user image"
@@ -39,7 +39,14 @@ const NavDropDownMenu = ({ triggerStyle, user }) => {
                 height={300}
                 className="w-[36px] h-[36px] rounded object-fill outline-0"
               />
-            }
+            )}
+            {!user?.image && (
+              <div className="w-[36px] h-[36px] rounded object-fill outline-0 flex items-center justify-center bg-[#ff4ff3]/30">
+                <p className="font-semibold">
+                  {(user?.username).charAt(0).toUpperCase()}
+                </p>
+              </div>
+            )}
           </div>
           {user?.walletAddress && (
             <div className="flex flex-col items-end justify-center h-9">

@@ -61,7 +61,7 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
           {activeTab === 0 &&
             assets &&
             assets.map((item, i) => <ShoppingCard key={i} data={item} />)}
-          {activeTab === 0 && !assets && (
+          {activeTab === 0 && !assets.length && (
             <p className="text-white font-bold text-xl text-center">
               {" "}
               No assets found{" "}
@@ -76,7 +76,7 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
                 link={`/user/collection/${item?._id}`}
               />
             ))}
-          {activeTab === 1 && !collections && (
+          {activeTab === 1 && !collections.length && (
             <p className="text-white font-bold text-xl text-center">
               {" "}
               No collections found{" "}
@@ -85,13 +85,21 @@ const ProfileTabs = ({ otherStyles, assets, collections, activity }) => {
           {activeTab === 2 &&
             onSale &&
             onSale.map((item, i) => <ShoppingCard key={i} data={item} />)}
-          {activeTab === 2 && !onSale && (
+          {activeTab === 2 && !onSale.length && (
             <p className="text-white font-bold text-xl text-center">
               {" "}
               No item on sale{" "}
             </p>
           )}
-          {activeTab === 3 && <MessageCard />}
+          {activeTab === 3 &&
+            activity &&
+            activity.map((item, i) => <MessageCard key={i} data={item} />)}
+          {activeTab === 3 && !activity.length && (
+            <p className="text-white font-bold text-xl text-center">
+              {" "}
+              No notifications{" "}
+            </p>
+          )}
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ const userSchema = new Schema({
     },
     balance: {
         type: Number,
-        defualt: 0
+        default: 0
     },
     public_id: String,
     resetPasswordToken: {

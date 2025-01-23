@@ -7,12 +7,14 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import { useDataContext } from "@/components/context/DataProvider";
+import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 import Link from "next/link";
 import Loading from "@/components/loading/Loading";
 
 const page = () => {
+  const router = useRouter();
   const { getUser } = useDataContext();
   const [formData, setFormData] = useState({
     username: "",
@@ -62,6 +64,7 @@ const page = () => {
       if (response.ok) {
         await getUser();
         toast.success("Login Successful. redirecting...");
+        router.push("/user");
         return;
       }
     } catch (error) {

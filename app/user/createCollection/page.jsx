@@ -12,19 +12,15 @@ import {
   useAccount,
   useSendTransaction,
   useWaitForTransactionReceipt,
-  useConnect,
-  injected,
 } from "wagmi";
 import { parseEther } from "viem";
 import { useAppKit, useAppKitNetwork } from "@reown/appkit/react";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
-import { mainnet, sepolia } from "viem/chains";
-import { switchChain } from "viem/actions";
+import { mainnet } from "viem/chains";
 
 const page = () => {
   const { open } = useAppKit();
   const { chainId, switchNetwork } = useAppKitNetwork();
-  const { connectAsync } = useConnect();
   const { address, isConnected } = useAccount();
   const { data: hash, isPending, sendTransaction } = useSendTransaction();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -105,6 +101,7 @@ const page = () => {
         }
         if (res.ok) {
           toast.success("Collection created");
+          router.push("/user");
         }
       }
     } catch (error) {
@@ -134,7 +131,7 @@ const page = () => {
       <h2 className="text-center text-2xl sm:text-3xl font-bold text-[#ffffff] mb-3">
         Create a collection
       </h2>
-      <div className="sm:w-[1184px] min:h-[532px] rounded-[10px]  flex flex-col sm:flex-row sm:space-x-2 justify-center items-start relative">
+      <div className="sm:w-[1184px] min-h-[832px] rounded-[10px]  flex flex-col sm:flex-row sm:space-x-2 justify-center items-start relative">
         {loading && (
           <Loading
             otherStyles={
@@ -149,7 +146,7 @@ const page = () => {
             }
           />
         )}
-        <div className="mx-auto">
+        <div className="">
           <ImageUpload
             image={image}
             setImage={setImage}
@@ -158,7 +155,7 @@ const page = () => {
             otherStyles={""}
           />
         </div>
-        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid self-center sm:flex hidden" />
+        <div className="h-[400px] w-[1px] border border-[#ff4ff3] border-solid mt-4 sm:flex hidden" />
         <form
           onSubmit={(e) => e.preventDefault()}
           className="mt-2 sm:mt-0 mx-auto p-2 sm:p-0"

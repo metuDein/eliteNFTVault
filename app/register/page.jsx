@@ -9,6 +9,7 @@ import {
   faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +21,7 @@ const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%])[a-zA-Z][a-zA-Z0-9!@#$%]{7,23}$/;
 
 const page = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -72,9 +74,25 @@ const page = () => {
         return;
       }
       if (response.ok) {
+        await fetch("/api/mailer/custom", {
+          method: "POST",
+          body: JSON.stringify({
+            email: formData.email,
+            subject: `Welcome on Board ${formData.username}`,
+            body: `<h2>Welcome to EliteNFTVault! 🎉</h2> 
+            <p>Hi ${formData.username},</p>
+            <p>Thank you for joining EliteNFTVault! We’re excited to have you on board and can’t wait to help you make your first sale.
+</p>
+<p>Need help? Reply anytime—we’re here for you! Cheers,
+</p>
+<p>
+EliteNFTVault team,</p>`,
+          }),
+        });
         toast.success(
           "Registration Successful. check your email (also your spam folder). Redirecting..."
         );
+        router.push("/login");
       }
     } catch (error) {
       toast.error("registration failed.");
@@ -206,6 +224,7 @@ const page = () => {
                 handleChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
+                inputType={"password"}
               />
               {formData.password && validPassword && (
                 <div className="absolute w-[17px] rounded-full top-2 right-1">
@@ -237,6 +256,7 @@ const page = () => {
                 placeholder={"re-enter your password"}
                 value={confirmPass}
                 handleChange={(e) => setConfirmPass(e.target.value)}
+                inputType={"password"}
               />
               {confirmPass && confirmPass === formData.password && (
                 <div className="absolute w-[17px] rounded-full top-2 right-1">

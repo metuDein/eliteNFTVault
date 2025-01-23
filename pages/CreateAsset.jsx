@@ -6,11 +6,14 @@ import { useState } from "react";
 import Loading from "@/components/loading/Loading";
 import { toast } from "react-toastify";
 import CustomDropdown from "@/components/dropdown/CustomDropdown";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ConfirmBtn from "@/components/loading/ConfirmBtn";
+import { useDataContext } from "@/components/context/DataProvider";
 
 const CreateAsset = () => {
+  const { fetchAppData } = useDataContext();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const collectionId = searchParams.get("collectionId");
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
@@ -72,6 +75,8 @@ const CreateAsset = () => {
           toast.error(errorData.message);
         }
         if (res.ok) {
+          await fetchAppData();
+          router.push("/user");
           toast.success("Asset created");
         }
       }
