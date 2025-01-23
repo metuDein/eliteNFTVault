@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, DM_Sans, DM_Mono } from "next/font/google";
+import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Provider from "@/components/context/Provider";
 import { DataProvider } from "@/components/context/DataProvider";
@@ -23,17 +23,11 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "700"], // Specify weights as needed
 });
 
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"], // Specify weights if available for DM Mono
-});
-
 export const metadata = {
   metadataBase: new URL("https://www.elitenftvault.pro"),
   title: "EliteNFTVault | Exclusive NFT Collectibles",
   description:
-    "EliteNFTVault is your gateway to premium digital collectibles. Discover, trade, and showcase exclusive NFTs in a secure and luxurious environment tailored for collectors and creators alike.",
+    "EliteNFTVault is your gateway to premium digital collectibles. Discover, trade, and showcase exclusive NFTs. ",
   alternates: {
     canonical: "https://www.elitenftvault.pro",
     languages: {
@@ -74,7 +68,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${dmMono.variable} antialiased`}>
+      <body className={`${dmSans.variable} ${geistMono.variable} antialiased`}>
         <Provider>
           <AppKit>
             <DataProvider>

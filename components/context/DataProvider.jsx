@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
     assets: [],
     notifications: [],
   });
+  const [appLoading, setAppLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [search, setSearch] = useState("");
   const [searchResultAssets, setSearchResultAssets] = useState([]);
@@ -36,7 +37,7 @@ export const DataProvider = ({ children }) => {
       }
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         setAppData({
           ...appData,
@@ -50,6 +51,8 @@ export const DataProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(`${error.name} : ${error.message}`);
+    } finally {
+      setAppLoading(false);
     }
   };
   useEffect(() => {
@@ -57,7 +60,6 @@ export const DataProvider = ({ children }) => {
 
     setInterval(() => {
       fetchAppData();
-      getUser();
     }, 180000);
   }, []);
 
@@ -69,6 +71,7 @@ export const DataProvider = ({ children }) => {
         searchResultAssets,
         searchResultCollections,
         search,
+        appLoading,
         setSearch,
         setSearchResultCollections,
         setSearchResultAssets,

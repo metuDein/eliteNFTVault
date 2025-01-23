@@ -18,13 +18,27 @@ const CollectionCard = ({ data, link }) => {
         className="w-full h-[150px] mx-auto mb-2 absolute object-cover top-0"
       />
       <div className="z-0">
-        <Image
-          src={"/assets/profilepic.jpg"}
-          alt="collection owner"
-          width={"1000"}
-          height={"1000"}
-          className="w-[150px] h=[150px] rounded-full mx-auto mb-2  object-cover "
-        />
+        {data?.owner?.image && (
+          <Image
+            src={data?.owner?.image}
+            alt="collection owner"
+            width={"1000"}
+            height={"1000"}
+            className="w-[150px] h-[150px] rounded-full mx-auto mb-2  object-cover "
+          />
+        )}
+        {!data?.owner?.image && (
+          <div className="w-[150px] h-[150px] rounded-full mx-auto mb-2 flex items-center justify-center bg-[#ff4ff3]/30">
+            {data?.owner?.username && (
+              <p className="font-semibold text-xl">{`${(data?.owner?.username)
+                .charAt(0)
+                .toUpperCase()}`}</p>
+            )}
+            {!data?.owner?.username && (
+              <p className="font-semibold text-xl">E</p>
+            )}
+          </div>
+        )}
         <h3 className="mb-2 font-bold text-center">{`${(data?.name).substring(
           0,
           20

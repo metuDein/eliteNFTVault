@@ -301,7 +301,7 @@ EliteNFTVault team,</p>`,
           <div className="flex items-center justify-between ">
             <div className="flex items-center justify-between flex-1 px-2 sm:px-10">
               <Link
-                href={"#"}
+                href={"/marketplace/explore"}
                 className="hover:underline hover:scale-[1.1] transform duration-300 ml-10 hidden sm:flex"
               >
                 Explore

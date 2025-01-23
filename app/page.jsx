@@ -54,7 +54,7 @@ export default function Home() {
           <div></div>
         </section>
         {/* second section */}
-        <section className="max-w-4xl min-h-screen w-full flex flex-col sm:flex-row items-start justify-between my-10">
+        <section className="max-w-4xl min-h-screen w-full flex flex-col sm:flex-row items-start justify-between sm:my-10">
           <div className="p-1 sm:flex hidden flex-1 min-h-[350px] mx-auto w-full">
             <SectionSecond />
           </div>
