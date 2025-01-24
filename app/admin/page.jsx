@@ -31,7 +31,7 @@ const page = () => {
     }
   }, [appData]);
 
-  if (appLoading)
+  if (appLoading && !appData?.user)
     return (
       <div className="flex items-center justify-center w-full min-h-screen">
         {" "}
@@ -51,65 +51,73 @@ const page = () => {
       <section className="min-h-1">
         <AdminTabs />
       </section>
-      <section className="min-h-[600px] w-full p-2">
-        <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
-          Recent users
-        </h2>
-        <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-start mx-auto">
-          {[...recentUsers].reverse().map((item, index) => (
-            <UserCard
-              data={item}
-              index={index}
-              key={item._id}
-              link={`/admin/editUser/${item._id}`}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="min-h-[600px] w-full p-2">
-        <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
-          Recent collections
-        </h2>
-        <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center mx-auto">
-          {[...recentCollection].reverse().map((item, index) => (
-            <CollectionCard
-              data={item}
-              index={index}
-              link={`/admin/editCollection/${item?._id}`}
-              key={item._id}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="min-h-[600px] w-full p-2">
-        <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
-          Recent assets
-        </h2>
-        <div className="w-full p-1 min-h-[200xp] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center mx-auto">
-          {[...recentAsset].reverse().map((item, index) => (
-            <AdminAssets
-              data={item}
-              index={index}
-              link={`/admin/editAsset/${item?._id}`}
-              key={item._id}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="min-h-[600px] w-full p-2">
-        <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
-          Recent messages
-        </h2>
-        <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-start mx-auto">
-          {[...recentMsg].reverse().map((item, index) => (
-            <MessageCard
-              data={item}
-              link={`/admin/message/${item?._id}`}
-              key={item._id}
-            />
-          ))}
-        </div>
-      </section>
+      {recentUsers && (
+        <section className="min-h-[600px] w-full p-2">
+          <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
+            Recent users
+          </h2>
+          <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-start mx-auto">
+            {[...recentUsers].reverse().map((item, index) => (
+              <UserCard
+                data={item}
+                index={index}
+                key={item._id}
+                link={`/admin/editUser/${item._id}`}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      {recentCollection && (
+        <section className="min-h-[600px] w-full p-2">
+          <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
+            Recent collections
+          </h2>
+          <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center mx-auto">
+            {[...recentCollection].reverse().map((item, index) => (
+              <CollectionCard
+                data={item}
+                index={index}
+                link={`/admin/editCollection/${item?._id}`}
+                key={item._id}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      {recentAsset && (
+        <section className="min-h-[600px] w-full p-2">
+          <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
+            Recent assets
+          </h2>
+          <div className="w-full p-1 min-h-[200xp] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-center mx-auto">
+            {[...recentAsset].reverse().map((item, index) => (
+              <AdminAssets
+                data={item}
+                index={index}
+                link={`/admin/editAsset/${item?._id}`}
+                key={item._id}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      {recentMsg && (
+        <section className="min-h-[600px] w-full p-2">
+          <h2 className=" my-1 sm:my-3 font-semibold text-white text-center">
+            Recent messages
+          </h2>
+          <div className="w-full p-1 min-h-[200px] mt-2 sm:mt-5 grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-5 justify-items-start mx-auto">
+            {[...recentMsg].reverse().map((item, index) => (
+              <MessageCard
+                data={item}
+                link={`/admin/message/${item?._id}`}
+                key={item._id}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

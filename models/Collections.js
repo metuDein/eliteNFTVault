@@ -25,7 +25,7 @@ const collectionSchema = new Schema({
     },
     blockChain: {
         type: String,
-        required: true
+        default: "Ethereum MainNet"
     },
     public_id: String,
 }, {
