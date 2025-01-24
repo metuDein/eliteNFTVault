@@ -24,6 +24,7 @@
     "@walletconnect/web3-provider": "^1.8.0",
     "@web3modal/ethereum": "^2.7.1",
     "@web3modal/react": "^2.7.1",
+    "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
